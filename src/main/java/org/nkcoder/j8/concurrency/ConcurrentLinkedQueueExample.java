@@ -1,4 +1,4 @@
-package org.nkcoder.j8.concurrency.thread_safe;
+package org.nkcoder.j8.concurrency;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;

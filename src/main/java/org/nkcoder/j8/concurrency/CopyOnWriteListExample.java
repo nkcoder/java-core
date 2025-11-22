@@ -1,4 +1,4 @@
-package org.nkcoder.j8.concurrency.thread_safe;
+package org.nkcoder.j8.concurrency;
 
 import java.util.Arrays;
 import java.util.Iterator;

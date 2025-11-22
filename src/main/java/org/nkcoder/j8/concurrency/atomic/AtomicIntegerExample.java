@@ -1,4 +1,4 @@
-package org.nkcoder.j8.concurrency.thread_safe;
+package org.nkcoder.j8.concurrency.atomic;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
