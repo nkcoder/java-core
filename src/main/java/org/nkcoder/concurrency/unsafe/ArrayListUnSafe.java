@@ -1,7 +1,27 @@
-package org.nkcoder.concurrency.not_thread_safe;
+package org.nkcoder.concurrency.unsafe;
 
 import java.util.ArrayList;
 
+/**
+ * ArrayList Thread-Safety Demonstration
+ *
+ * This example demonstrates why ArrayList is NOT thread-safe.
+ * The add() method involves multiple steps that can be interleaved:
+ * 1. Check current size
+ * 2. Store element at index
+ * 3. Increment size
+ *
+ * When two threads execute simultaneously, race conditions occur:
+ * 1. Both threads might read the same size value
+ * 2. Both write to the same index, overwriting data
+ * 3. The size increment might be lost
+ *
+ * How to Fix:
+ * - Collections.synchronizedList(new ArrayList<>())
+ * - CopyOnWriteArrayList
+ * - External synchronization with synchronized blocks
+ * - Vector
+ */
 public class ArrayListUnSafe {
 
     // ArrayList is not thread-safe, the `add()` method involves multiple steps:
@@ -34,7 +54,7 @@ public class ArrayListUnSafe {
         insertOne.join();
         insertTwo.join();
 
-        // Expectation: 20000, Actual: 1379874 (different numbers in different runs, but typically be less than 20000)
+        // Expectation: 2000000, Actual: varies (typically less than 2000000)
         System.out.println("contain size: " + container.size());
     }
 }

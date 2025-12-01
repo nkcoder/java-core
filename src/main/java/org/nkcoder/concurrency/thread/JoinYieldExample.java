@@ -3,6 +3,7 @@ package org.nkcoder.concurrency.thread;
 /**
  * Thread Join Example
  *
+ * <pre>
  * join() is a thread coordination method that allows one thread to wait for another thread
  * to complete before continuing execution.
  *
@@ -32,6 +33,7 @@ package org.nkcoder.concurrency.thread;
  * - Main thread waits for calculation to complete using join()
  * - Without join(), main thread might print before calculation finishes (race condition)
  * - volatile ensures visibility of 'total' across threads
+ * </pre>
  */
 public class JoinYieldExample {
   // volatile ensures changes to 'total' are visible to all threads

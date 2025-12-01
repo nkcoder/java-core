@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.thread;
+package org.nkcoder.concurrency.synchronization;
 
 /**
  * Volatile Keyword Example

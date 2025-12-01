@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.thread;
+package org.nkcoder.concurrency.utilities;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

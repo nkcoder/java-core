@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.thread;
+package org.nkcoder.concurrency.locks;
 
 import java.util.concurrent.locks.ReentrantLock;
 

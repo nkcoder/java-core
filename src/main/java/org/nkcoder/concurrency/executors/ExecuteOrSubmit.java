@@ -1,31 +1,14 @@
-package org.nkcoder.concurrency.thread_pool;
+package org.nkcoder.concurrency.executors;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ExecuteOrSubmit {
-
-  private record Divide(int divider, int divisor) implements Runnable {
-
-    @Override
-    public void run() {
-      int result = divider / divisor;
-      System.out.println("result is: " + result);
-    }
-  }
-
-  public static void main(String[] args) {
-    try (ExecutorService executorService = Executors.newFixedThreadPool(3)) {
-      for (int i = 0; i < 10; i++) {
-        executorService.execute(new Divide(100, i));
-        //        executorService.submit(new Divide(100, i));
-      }
-      executorService.shutdown();
-    }
-  }
-}
-
-/*
+/**
+ * execute() vs submit() Example
+ *
+ * This example demonstrates the key differences between execute() and submit()
+ * methods of ExecutorService.
+ *
  * Difference between `execute()` and `submit` on ExecutorService:
  *
  * Return Type
@@ -49,3 +32,24 @@ public class ExecuteOrSubmit {
  *   Cancel the task
  *   Handle exceptions programmatically
  */
+public class ExecuteOrSubmit {
+
+  private record Divide(int divider, int divisor) implements Runnable {
+
+    @Override
+    public void run() {
+      int result = divider / divisor;
+      System.out.println("result is: " + result);
+    }
+  }
+
+  public static void main(String[] args) {
+    try (ExecutorService executorService = Executors.newFixedThreadPool(3)) {
+      for (int i = 0; i < 10; i++) {
+        executorService.execute(new Divide(100, i));
+        //        executorService.submit(new Divide(100, i));
+      }
+      executorService.shutdown();
+    }
+  }
+}

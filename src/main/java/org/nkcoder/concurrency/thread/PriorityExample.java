@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency;
+package org.nkcoder.concurrency.thread;
 
 /**
  * Thread Priority Example

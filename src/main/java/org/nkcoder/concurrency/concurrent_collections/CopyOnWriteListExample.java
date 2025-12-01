@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency;
+package org.nkcoder.concurrency.concurrent_collections;
 
 import java.util.Arrays;
 import java.util.Iterator;

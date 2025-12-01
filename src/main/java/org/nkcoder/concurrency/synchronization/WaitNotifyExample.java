@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.thread;
+package org.nkcoder.concurrency.synchronization;
 
 import java.util.concurrent.TimeUnit;
 
@@ -119,4 +119,3 @@ public class WaitNotifyExample {
   }
 
 }
-

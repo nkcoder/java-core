@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.reentrantlock;
+package org.nkcoder.concurrency.locks;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;

@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.thread;
+package org.nkcoder.concurrency.synchronization;
 
 /**
  * Synchronized Keyword Example

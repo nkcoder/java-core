@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency.not_thread_safe;
+package org.nkcoder.concurrency.unsafe;
 
 import java.util.HashMap;
 

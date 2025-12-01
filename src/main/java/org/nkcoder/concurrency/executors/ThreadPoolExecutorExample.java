@@ -1,6 +1,7 @@
-package org.nkcoder.concurrency.thread_pool;
+package org.nkcoder.concurrency.executors;
 
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,15 +62,15 @@ import java.util.concurrent.TimeUnit;
  * - Bounded queue causing rejections (30 tasks, 5 threads, 10 queue slots)
  * - Proper shutdown pattern
  */
-public class ThreadPoolExecutor {
+public class ThreadPoolExecutorExample {
 
   public static void main(String[] args) throws InterruptedException {
     // Custom ThreadPoolExecutor with explicit configuration
     // corePoolSize=5, maxPoolSize=5, queue capacity=10
     // Total capacity: 5 executing + 10 queued = 15 tasks
     // Submitting 30 tasks will cause 15 rejections
-    java.util.concurrent.ThreadPoolExecutor threadPoolExecutor =
-        new java.util.concurrent.ThreadPoolExecutor(
+    ThreadPoolExecutor threadPoolExecutor =
+        new ThreadPoolExecutor(
             5,  // Core pool size (minimum threads)
             5,  // Maximum pool size (max threads, same as core here)
             0,  // Keep alive time (0 = excess threads die immediately)

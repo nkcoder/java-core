@@ -1,4 +1,4 @@
-package org.nkcoder.concurrency;
+package org.nkcoder.concurrency.utilities;
 
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
