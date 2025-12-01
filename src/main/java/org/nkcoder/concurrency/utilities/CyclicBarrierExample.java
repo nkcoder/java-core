@@ -8,55 +8,23 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * CyclicBarrier Example
+ * CyclicBarrier: All threads wait for EACH OTHER at a barrier point.
  *
- * CyclicBarrier is a synchronization aid that allows a set of threads to wait for each other
- * to reach a common barrier point before proceeding.
- *
- * Key characteristics:
- * 1. All threads must call await() - they wait for each other (mutual wait)
- * 2. When all threads arrive, the barrier is tripped and all are released
- * 3. Reusable (cyclic) - can be reset and used again after barrier is tripped
- * 4. Optional barrier action - runs once when barrier is tripped (before threads are released)
- * 5. Useful for multi-phase parallel algorithms
- *
- * CyclicBarrier vs CountDownLatch:
- *
- * CyclicBarrier:
- * - All participating threads wait for EACH OTHER
- * - Reusable - automatically resets after all threads pass
- * - Used when threads perform work in synchronized phases
- * - Example: 10 threads all wait for each other, then proceed together
- *
- * CountDownLatch:
- * - One/more threads wait for OTHER threads to complete
- * - Single-use - cannot be reset
- * - Used when one thread waits for N operations to complete
- * - Example: Main thread waits for 10 worker threads to finish
- *
- * This example demonstrates multi-phase parallel execution:
- * - Phase 0: All threads wait to start together
- * - Phase 1: All threads complete task one, wait for others
- * - Phase 2: All threads complete task two, wait for others
+ * <ul>
+ *   <li>Reusable (cyclic) - auto-resets after all threads pass</li>
+ *   <li>Optional barrier action runs when all arrive</li>
+ *   <li>Unlike CountDownLatch: mutual wait, not one-way wait</li>
+ * </ul>
  */
 public class CyclicBarrierExample {
 
   void doTask(CyclicBarrier cyclicBarrier) {
-
     try {
-      // Phase 0: Wait for all threads to be ready before starting
-      cyclicBarrier.await();
-
-      // Phase 1: All threads execute task one
+      cyclicBarrier.await();  // Phase 0: wait for all threads to be ready
       doTaskOne();
-      // Wait for all threads to complete task one before proceeding
-      cyclicBarrier.await();
-
-      // Phase 2: All threads execute task two
+      cyclicBarrier.await();  // Phase 1: wait for all to complete task one
       doTaskTwo();
-      // Wait for all threads to complete task two
-      cyclicBarrier.await();
-
+      cyclicBarrier.await();  // Phase 2: wait for all to complete task two
     } catch (InterruptedException | BrokenBarrierException e) {
       e.printStackTrace();
     }
@@ -64,7 +32,6 @@ public class CyclicBarrierExample {
 
   private void doTaskOne() {
     try {
-      // Simulate work with random delay
       Thread.sleep(new Random().nextInt(500));
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -74,7 +41,6 @@ public class CyclicBarrierExample {
 
   private void doTaskTwo() {
     try {
-      // Simulate work with random delay
       Thread.sleep(new Random().nextInt(1000));
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -85,11 +51,9 @@ public class CyclicBarrierExample {
   public static void main(String[] args) {
     CyclicBarrierExample cyclicBarrierExample = new CyclicBarrierExample();
     final AtomicInteger phase = new AtomicInteger(0);
-
     final int THREAD_NUMBER = 10;
 
-    // Barrier action: executed once when all threads reach the barrier
-    // Runs in the last thread to arrive before releasing all threads
+    // Barrier action runs when all threads arrive
     Runnable action = () -> {
       if (phase.get() == 0) {
         System.out.println("all threads are ready to do the task.");
@@ -102,13 +66,9 @@ public class CyclicBarrierExample {
       }
     };
 
-    // Create barrier for 10 threads with a barrier action
-    // The action runs each time all threads reach the barrier
     CyclicBarrier cyclicBarrier = new CyclicBarrier(THREAD_NUMBER, action);
-
     ExecutorService executorService = Executors.newFixedThreadPool(THREAD_NUMBER);
 
-    // Submit 10 tasks - each will go through 3 synchronization points
     for (int i = 0; i < THREAD_NUMBER; i++) {
       executorService.submit(() -> cyclicBarrierExample.doTask(cyclicBarrier));
     }
