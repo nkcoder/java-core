@@ -43,5 +43,6 @@ bin/
 .DS_Store
 .idea
 .metals
+.bloop
 
 CLAUDE.md
