@@ -5,16 +5,14 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- *
- *
- * <pre>
  * Stream basics: creating streams and core operations.
  *
- * - Streams are lazy - intermediate ops don't execute until terminal op
- * - Streams can only be consumed once
- * - Intermediate: filter, map, flatmap, sorted, distinct, limit, skip
- * - Terminal: forEach, collect, reduce, count, findFirst, anyMatch
- * </pre>
+ * <ul>
+ *    <li> Streams are lazy - intermediate ops don't execute until terminal op </li>
+ *    <li> Streams can only be consumed once </li>
+ *    <li> Intermediate: filter, map, flatmap, sorted, distinct, limit, skip </li>
+ *    <li> Terminal: forEach, collect, reduce, count, findFirst, anyMatch </li>
+ * </ul>
  */
 public class StreamBasicsExample {
 
