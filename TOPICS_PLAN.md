@@ -55,13 +55,13 @@ src/main/java/org/nkcoder/
 
 | Status | Example                    | Concepts                                            |
 |--------|----------------------------|-----------------------------------------------------|
-| [ ]    | StreamBasicsExample        | Creating streams, intermediate/terminal operations  |
-| [ ]    | StreamCollectorsExample    | Collectors, groupingBy, partitioningBy, toMap       |
-| [ ]    | ParallelStreamExample      | Parallel streams, when to use, pitfalls             |
-| [ ]    | OptionalExample            | Optional creation, chaining, orElse vs orElseGet    |
-| [ ]    | FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier, custom     |
-| [ ]    | LambdaExample              | Lambda syntax, method references, effectively final |
-| [ ]    | StreamAdvancedExample      | flatMap, reduce, takeWhile, dropWhile               |
+| [x]    | StreamBasicsExample        | Creating streams, intermediate/terminal operations  |
+| [x]    | StreamCollectorsExample    | Collectors, groupingBy, partitioningBy, toMap       |
+| [x]    | ParallelStreamExample      | Parallel streams, when to use, pitfalls             |
+| [x]    | OptionalExample            | Optional creation, chaining, orElse vs orElseGet    |
+| [x]    | FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier, custom     |
+| [x]    | LambdaExample              | Lambda syntax, method references, effectively final |
+| [x]    | StreamAdvancedExample      | flatMap, reduce, takeWhile, dropWhile               |
 
 ---
 
