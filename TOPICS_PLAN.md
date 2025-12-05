@@ -22,20 +22,32 @@ src/main/java/org/nkcoder/
 
 ## Topic Details
 
-### 1. concurrency/ - Multithreading & Concurrency
+### 1. concurrency/ - Multithreading & Concurrency (Java 25)
+
+**Stable (Production-Ready):**
+
+| Sub-package  | Status | Examples                      | Concepts                                 |
+|--------------|--------|-------------------------------|------------------------------------------|
+| virtual/     | [x]    | VirtualThreadExample          | Virtual threads, I/O-bound concurrency   |
+| scoped/      | [x]    | ScopedValueExample            | ScopedValue (replaces ThreadLocal)       |
+
+**Preview (Experimental - API may change):**
+
+| Sub-package  | Status | Examples                      | Concepts                                 |
+|--------------|--------|-------------------------------|------------------------------------------|
+| preview/     | [x]    | StructuredConcurrencyExample  | StructuredTaskScope, Joiner (5th preview)|
+
+**Foundational (To Add Later):**
 
 | Sub-package             | Status | Examples                                                      | Concepts                                   |
 |-------------------------|--------|---------------------------------------------------------------|--------------------------------------------|
-| thread/                 | [x]    | ThreadExample, DaemonThreadExample                            | Thread creation, lifecycle, daemon threads |
-| synchronization/        | [x]    | SynchronizedExample, VolatileExample, WaitNotifyExample       | synchronized, volatile, wait/notify        |
-| locks/                  | [x]    | ReentrantLockDemo, ReadWriteLockExample, LockSupportExample   | ReentrantLock, ReadWriteLock, Conditions   |
-| atomic/                 | [x]    | AtomicIntegerExample, AtomicReferenceExample                  | Atomic classes, CAS operations             |
-| executors/              | [x]    | FixThreadPool, ScheduledThreadPool, ThreadPoolExecutor        | ExecutorService, thread pools              |
-| concurrent_collections/ | [x]    | ConcurrentHashMapExample, CopyOnWriteListExample              | Thread-safe collections                    |
-| utilities/              | [x]    | CountDownLatchExample, CyclicBarrierExample, SemaphoreExample | Synchronization utilities                  |
-| unsafe/                 | [x]    | ArrayListUnSafe, HashMapUnSafe                                | Thread-safety issues demonstration         |
-| virtual/                | [ ]    | VirtualThreadExample, VirtualVsPlatformExample                | Virtual threads (Java 21)                  |
-| structured/             | [ ]    | StructuredConcurrencyExample                                  | Structured concurrency (Java 21)           |
+| thread/                 | [ ]    | ThreadExample, DaemonThreadExample                            | Thread creation, lifecycle, daemon threads |
+| synchronization/        | [ ]    | SynchronizedExample, VolatileExample, WaitNotifyExample       | synchronized, volatile, wait/notify        |
+| locks/                  | [ ]    | ReentrantLockDemo, ReadWriteLockExample                       | ReentrantLock, ReadWriteLock               |
+| atomic/                 | [ ]    | AtomicIntegerExample, AtomicReferenceExample                  | Atomic classes, CAS operations             |
+| executors/              | [ ]    | ExecutorServiceExample, CompletableFutureExample              | ExecutorService, async programming         |
+| concurrent_collections/ | [ ]    | ConcurrentHashMapExample, CopyOnWriteListExample              | Thread-safe collections                    |
+| utilities/              | [ ]    | CountDownLatchExample, SemaphoreExample                       | Synchronization utilities                  |
 
 ---
 
@@ -151,7 +163,7 @@ src/main/java/org/nkcoder/
 
 | Topic        | Status      | Progress |
 |--------------|-------------|----------|
-| concurrency  | In Progress | 8/10     |
+| concurrency  | In Progress | 3/10     |
 | collections  | Complete    | 6/6      |
 | streams      | Complete    | 4/4      |
 | fp           | Complete    | 6/6      |
@@ -161,4 +173,4 @@ src/main/java/org/nkcoder/
 | generics     | Not Started | 0/5      |
 | exceptions   | Not Started | 0/4      |
 | io           | Not Started | 0/3      |
-| **Total**    |             | **30/55**|
+| **Total**    |             | **25/55**|

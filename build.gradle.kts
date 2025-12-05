@@ -11,6 +11,16 @@ java {
     }
 }
 
+
+// For preview features
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(listOf("--enable-preview", "-Xlint:preview"))
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs("--enable-preview")
+}
+
 repositories {
     mavenCentral()
 }
