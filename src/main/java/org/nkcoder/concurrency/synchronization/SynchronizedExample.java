@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  */
 public class SynchronizedExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     raceConditionProblem();
     synchronizedMethods();
     synchronizedBlocks();

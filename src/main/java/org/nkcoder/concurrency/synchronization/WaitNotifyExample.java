@@ -23,7 +23,7 @@ import java.util.Queue;
  */
 public class WaitNotifyExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     basicWaitNotify();
     producerConsumer();
     notifyVsNotifyAll();

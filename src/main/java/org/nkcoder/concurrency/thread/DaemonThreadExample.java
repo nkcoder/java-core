@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadFactory;
  */
 public class DaemonThreadExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     whatAreDaemonThreads();
     daemonVsUserThreads();
     settingDaemonStatus();

@@ -9,25 +9,26 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * ReentrantLock: Explicit lock with more features than synchronized.
  *
- * <p><strong>Java 25 Note:</strong> Still recommended when you need tryLock, interruptible
- * locking, fairness, or multiple Conditions. For simpler cases, {@code synchronized} or
- * {@code Atomic*} classes may suffice.
+ * <p><strong>Java 25 Note:</strong> Still recommended when you need tryLock, interruptible locking,
+ * fairness, or multiple Conditions. For simpler cases, {@code synchronized} or {@code Atomic*}
+ * classes may suffice.
  *
  * <p>Key concepts:
+ *
  * <ul>
- *   <li>Must explicitly lock() and unlock() (use try-finally)</li>
- *   <li>tryLock() for non-blocking lock attempts</li>
- *   <li>lockInterruptibly() allows interruption while waiting</li>
- *   <li>Condition objects for wait/notify with multiple conditions</li>
- *   <li>Fair mode option (threads acquire in FIFO order)</li>
+ *   <li>Must explicitly lock() and unlock() (use try-finally)
+ *   <li>tryLock() for non-blocking lock attempts
+ *   <li>lockInterruptibly() allows interruption while waiting
+ *   <li>Condition objects for wait/notify with multiple conditions
+ *   <li>Fair mode option (threads acquire in FIFO order)
  * </ul>
  *
- * <p>Interview tip: Know when to use ReentrantLock over synchronized,
- * and always use try-finally pattern.
+ * <p>Interview tip: Know when to use ReentrantLock over synchronized, and always use try-finally
+ * pattern.
  */
 public class ReentrantLockExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     basicUsage();
     tryLockExample();
     lockInterruptibly();
@@ -74,7 +75,8 @@ public class ReentrantLockExample {
 
     System.out.println("  Counter: " + counter.getCount());
 
-    System.out.println("""
+    System.out.println(
+        """
 
         CRITICAL: Always use try-finally pattern!
 
@@ -95,18 +97,20 @@ public class ReentrantLockExample {
     ReentrantLock lock = new ReentrantLock();
 
     // Thread 1 holds lock for a while
-    Thread holder = new Thread(() -> {
-      lock.lock();
-      try {
-        System.out.println("    Holder: Got lock, holding for 500ms...");
-        Thread.sleep(500);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      } finally {
-        lock.unlock();
-        System.out.println("    Holder: Released lock");
-      }
-    });
+    Thread holder =
+        new Thread(
+            () -> {
+              lock.lock();
+              try {
+                System.out.println("    Holder: Got lock, holding for 500ms...");
+                Thread.sleep(500);
+              } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+              } finally {
+                lock.unlock();
+                System.out.println("    Holder: Released lock");
+              }
+            });
 
     holder.start();
     Thread.sleep(50); // Let holder acquire lock
@@ -147,7 +151,8 @@ public class ReentrantLockExample {
 
     holder.join();
 
-    System.out.println("""
+    System.out.println(
+        """
 
         tryLock() use cases:
         - Avoid deadlock by backing off
@@ -165,19 +170,21 @@ public class ReentrantLockExample {
     // Thread holds lock
     lock.lock();
 
-    Thread waiter = new Thread(() -> {
-      try {
-        System.out.println("    Waiter: Trying to acquire lock (interruptibly)...");
-        lock.lockInterruptibly(); // Can be interrupted while waiting
-        try {
-          System.out.println("    Waiter: Got lock!");
-        } finally {
-          lock.unlock();
-        }
-      } catch (InterruptedException e) {
-        System.out.println("    Waiter: Interrupted while waiting for lock!");
-      }
-    });
+    Thread waiter =
+        new Thread(
+            () -> {
+              try {
+                System.out.println("    Waiter: Trying to acquire lock (interruptibly)...");
+                lock.lockInterruptibly(); // Can be interrupted while waiting
+                try {
+                  System.out.println("    Waiter: Got lock!");
+                } finally {
+                  lock.unlock();
+                }
+              } catch (InterruptedException e) {
+                System.out.println("    Waiter: Interrupted while waiting for lock!");
+              }
+            });
 
     waiter.start();
     Thread.sleep(100);
@@ -188,7 +195,8 @@ public class ReentrantLockExample {
     waiter.join();
     lock.unlock();
 
-    System.out.println("""
+    System.out.println(
+        """
 
         lockInterruptibly() vs lock():
         - lock(): Cannot be interrupted while waiting
@@ -255,34 +263,39 @@ public class ReentrantLockExample {
 
     BoundedBuffer<Integer> buffer = new BoundedBuffer<>(2);
 
-    Thread producer = new Thread(() -> {
-      try {
-        for (int i = 1; i <= 4; i++) {
-          buffer.put(i);
-          Thread.sleep(50);
-        }
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-    });
+    Thread producer =
+        new Thread(
+            () -> {
+              try {
+                for (int i = 1; i <= 4; i++) {
+                  buffer.put(i);
+                  Thread.sleep(50);
+                }
+              } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+              }
+            });
 
-    Thread consumer = new Thread(() -> {
-      try {
-        for (int i = 0; i < 4; i++) {
-          buffer.take();
-          Thread.sleep(150);
-        }
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-    });
+    Thread consumer =
+        new Thread(
+            () -> {
+              try {
+                for (int i = 0; i < 4; i++) {
+                  buffer.take();
+                  Thread.sleep(150);
+                }
+              } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+              }
+            });
 
     producer.start();
     consumer.start();
     producer.join();
     consumer.join();
 
-    System.out.println("""
+    System.out.println(
+        """
 
         Condition advantages over wait/notify:
         - Multiple conditions per lock
@@ -304,7 +317,8 @@ public class ReentrantLockExample {
     System.out.println("  Non-fair lock isFair: " + nonFairLock.isFair());
     System.out.println("  Fair lock isFair: " + fairLock.isFair());
 
-    System.out.println("""
+    System.out.println(
+        """
 
         Non-fair (default):
         - Thread can "barge" ahead of waiting threads
@@ -348,7 +362,8 @@ public class ReentrantLockExample {
     lock.unlock();
     System.out.println("  Hold count after all unlocks: " + lock.getHoldCount());
 
-    System.out.println("""
+    System.out.println(
+        """
 
         Reentrant means:
         - Same thread can acquire lock multiple times
@@ -361,7 +376,8 @@ public class ReentrantLockExample {
   static void bestPractices() {
     System.out.println("=== Best Practices ===");
 
-    System.out.println("""
+    System.out.println(
+        """
         When to use ReentrantLock over synchronized:
         - Need tryLock() for non-blocking attempts
         - Need lockInterruptibly() for cancellation

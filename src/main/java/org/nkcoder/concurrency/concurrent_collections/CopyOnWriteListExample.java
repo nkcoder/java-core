@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
  */
 public class CopyOnWriteListExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     howItWorks();
     basicOperations();
     iteratorBehavior();

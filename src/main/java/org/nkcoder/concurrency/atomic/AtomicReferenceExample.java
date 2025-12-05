@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicStampedReference;
  */
 public class AtomicReferenceExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     basicOperations();
     compareAndSetForObjects();
     updateAndAccumulate();

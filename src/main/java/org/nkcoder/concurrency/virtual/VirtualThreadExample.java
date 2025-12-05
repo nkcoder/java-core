@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
  */
 public class VirtualThreadExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     whatAreVirtualThreads();
     creatingVirtualThreads();
     virtualThreadExecutor();

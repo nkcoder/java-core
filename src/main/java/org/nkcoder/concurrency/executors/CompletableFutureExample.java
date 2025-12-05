@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CompletableFutureExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     creatingFutures();
     chainingOperations();
     thenApplyVsThenCompose();

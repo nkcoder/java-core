@@ -19,7 +19,7 @@ import java.util.Queue;
  */
 public class QueueExample {
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     queueBasicsExample();
     dequeExample();
     priorityQueueExample();

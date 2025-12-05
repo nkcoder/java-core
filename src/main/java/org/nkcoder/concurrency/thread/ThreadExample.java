@@ -20,7 +20,7 @@ package org.nkcoder.concurrency.thread;
  */
 public class ThreadExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     creatingThreads();
     threadLifecycle();
     threadPriority();

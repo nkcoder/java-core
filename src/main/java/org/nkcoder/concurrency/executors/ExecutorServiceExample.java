@@ -26,7 +26,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class ExecutorServiceExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     executorTypes();
     executeVsSubmit();
     futureBasics();

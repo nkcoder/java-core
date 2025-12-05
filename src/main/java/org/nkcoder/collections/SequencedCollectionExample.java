@@ -22,7 +22,7 @@ import java.util.SequencedSet;
  */
 public class SequencedCollectionExample {
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     sequencedCollectionExample();
     sequencedSetExample();
     sequencedMapExample();

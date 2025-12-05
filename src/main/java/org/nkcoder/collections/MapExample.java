@@ -17,7 +17,7 @@ import java.util.TreeMap;
  */
 public class MapExample {
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     hashMapExample();
     linkedHashMapExample();
     treeMapExample();

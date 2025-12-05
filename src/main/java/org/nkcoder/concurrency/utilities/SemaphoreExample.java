@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SemaphoreExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     basicUsage();
     resourcePool();
     binaryMutex();

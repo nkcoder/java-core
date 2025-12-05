@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CountDownLatchExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     basicUsage();
     startingGun();
     waitForCompletion();

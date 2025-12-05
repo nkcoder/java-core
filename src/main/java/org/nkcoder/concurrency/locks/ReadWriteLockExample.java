@@ -28,7 +28,7 @@ import java.util.concurrent.locks.StampedLock;
  */
 public class ReadWriteLockExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     basicUsage();
     cacheExample();
     readWriteBehavior();

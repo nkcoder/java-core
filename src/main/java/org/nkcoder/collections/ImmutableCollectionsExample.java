@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public class ImmutableCollectionsExample {
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     factoryMethodsExample();
     unmodifiableViewExample();
     copyOfExample();

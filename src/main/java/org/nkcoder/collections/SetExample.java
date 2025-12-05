@@ -17,7 +17,7 @@ import java.util.TreeSet;
  */
 public class SetExample {
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     hashSetExample();
     linkedHashSetExample();
     treeSetExample();

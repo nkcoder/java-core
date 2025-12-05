@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  */
 public class VolatileExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     visibilityProblem();
     volatileSolution();
     volatileNotAtomic();

@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.LongAdder;
  */
 public class ConcurrentHashMapExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     whyConcurrentHashMap();
     basicOperations();
     atomicCompoundOperations();
