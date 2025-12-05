@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerExample {
 
-  public static void main(String[] args) throws Exception {
+  static void main(String[] args) throws Exception {
     whyAtomicNeeded();
     basicOperations();
     atomicIncrementDecrement();

@@ -37,7 +37,7 @@ src/main/java/org/nkcoder/
 |--------------|--------|-------------------------------|------------------------------------------|
 | preview/     | [x]    | StructuredConcurrencyExample  | StructuredTaskScope, Joiner (5th preview)|
 
-**Interview Priority (Completed):**
+**Medium:**
 
 | Sub-package             | Status | Examples                                                      | Concepts                                   |
 |-------------------------|--------|---------------------------------------------------------------|--------------------------------------------|
@@ -45,14 +45,29 @@ src/main/java/org/nkcoder/
 | atomic/                 | [x]    | AtomicIntegerExample, AtomicReferenceExample                  | Atomic classes, CAS operations             |
 | concurrent_collections/ | [x]    | ConcurrentHashMapExample, CopyOnWriteListExample              | Thread-safe collections                    |
 
-**Foundational (To Add Later):**
+**Foundational (Learn for interviews & legacy code, prefer modern alternatives for new code):**
 
-| Sub-package             | Status | Examples                                                      | Concepts                                   |
-|-------------------------|--------|---------------------------------------------------------------|--------------------------------------------|
-| thread/                 | [ ]    | ThreadExample, DaemonThreadExample                            | Thread creation, lifecycle, daemon threads |
-| synchronization/        | [ ]    | SynchronizedExample, VolatileExample, WaitNotifyExample       | synchronized, volatile, wait/notify        |
-| locks/                  | [ ]    | ReentrantLockDemo, ReadWriteLockExample                       | ReentrantLock, ReadWriteLock               |
-| utilities/              | [ ]    | CountDownLatchExample, SemaphoreExample                       | Synchronization utilities                  |
+| Sub-package      | Status | Examples                                                      | Java 25 Recommendation                     |
+|------------------|--------|---------------------------------------------------------------|---------------------------------------------|
+| thread/          | [x]    | ThreadExample, DaemonThreadExample                            | ⚠️ Use ExecutorService or virtual threads   |
+| synchronization/ | [x]    | SynchronizedExample, VolatileExample, WaitNotifyExample       | ⚠️ Prefer Atomic*, locks, BlockingQueue     |
+| locks/           | [x]    | ReentrantLockExample, ReadWriteLockExample                    | ✅ Still relevant for advanced locking      |
+| utilities/       | [x]    | CountDownLatchExample, SemaphoreExample                       | ✅ Semaphore useful; Latch → structured concurrency |
+
+**Why learn foundational concurrency?**
+- Interview questions still focus heavily on these concepts
+- Legacy codebases use them extensively
+- Understanding primitives helps debug modern abstractions
+- Modern APIs (virtual threads, structured concurrency) build on these
+
+**Rule of thumb for new Java 25 code:**
+
+```
+1st choice: Virtual threads + simple blocking code
+2nd choice: ConcurrentHashMap, Atomic*, CompletableFuture
+3rd choice: ReentrantLock, Semaphore (when needed)
+Last resort: Raw threads, synchronized, wait/notify
+```
 
 ---
 
@@ -168,7 +183,7 @@ src/main/java/org/nkcoder/
 
 | Topic        | Status      | Progress |
 |--------------|-------------|----------|
-| concurrency  | In Progress | 9/18     |
+| concurrency  | Complete    | 18/18    |
 | collections  | Complete    | 6/6      |
 | streams      | Complete    | 4/4      |
 | fp           | Complete    | 6/6      |
@@ -178,4 +193,4 @@ src/main/java/org/nkcoder/
 | generics     | Not Started | 0/5      |
 | exceptions   | Not Started | 0/4      |
 | io           | Not Started | 0/3      |
-| **Total**    |             | **31/63**|
+| **Total**    |             | **40/63**|
