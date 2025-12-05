@@ -37,6 +37,14 @@ src/main/java/org/nkcoder/
 |--------------|--------|-------------------------------|------------------------------------------|
 | preview/     | [x]    | StructuredConcurrencyExample  | StructuredTaskScope, Joiner (5th preview)|
 
+**Interview Priority (Completed):**
+
+| Sub-package             | Status | Examples                                                      | Concepts                                   |
+|-------------------------|--------|---------------------------------------------------------------|--------------------------------------------|
+| executors/              | [x]    | ExecutorServiceExample, CompletableFutureExample              | ExecutorService, async programming         |
+| atomic/                 | [x]    | AtomicIntegerExample, AtomicReferenceExample                  | Atomic classes, CAS operations             |
+| concurrent_collections/ | [x]    | ConcurrentHashMapExample, CopyOnWriteListExample              | Thread-safe collections                    |
+
 **Foundational (To Add Later):**
 
 | Sub-package             | Status | Examples                                                      | Concepts                                   |
@@ -44,9 +52,6 @@ src/main/java/org/nkcoder/
 | thread/                 | [ ]    | ThreadExample, DaemonThreadExample                            | Thread creation, lifecycle, daemon threads |
 | synchronization/        | [ ]    | SynchronizedExample, VolatileExample, WaitNotifyExample       | synchronized, volatile, wait/notify        |
 | locks/                  | [ ]    | ReentrantLockDemo, ReadWriteLockExample                       | ReentrantLock, ReadWriteLock               |
-| atomic/                 | [ ]    | AtomicIntegerExample, AtomicReferenceExample                  | Atomic classes, CAS operations             |
-| executors/              | [ ]    | ExecutorServiceExample, CompletableFutureExample              | ExecutorService, async programming         |
-| concurrent_collections/ | [ ]    | ConcurrentHashMapExample, CopyOnWriteListExample              | Thread-safe collections                    |
 | utilities/              | [ ]    | CountDownLatchExample, SemaphoreExample                       | Synchronization utilities                  |
 
 ---
@@ -163,7 +168,7 @@ src/main/java/org/nkcoder/
 
 | Topic        | Status      | Progress |
 |--------------|-------------|----------|
-| concurrency  | In Progress | 3/10     |
+| concurrency  | In Progress | 9/18     |
 | collections  | Complete    | 6/6      |
 | streams      | Complete    | 4/4      |
 | fp           | Complete    | 6/6      |
@@ -173,4 +178,4 @@ src/main/java/org/nkcoder/
 | generics     | Not Started | 0/5      |
 | exceptions   | Not Started | 0/4      |
 | io           | Not Started | 0/3      |
-| **Total**    |             | **25/55**|
+| **Total**    |             | **31/63**|
