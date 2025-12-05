@@ -8,7 +8,8 @@ Reorganized by interview topics instead of Java versions.
 src/main/java/org/nkcoder/
 ├── concurrency/        # Multithreading & Concurrency
 ├── collections/        # Collections Framework
-├── streams/            # Streams & Functional Programming
+├── streams/            # Stream API
+├── fp/                 # Functional Programming
 ├── oop/                # OOP & Modern Classes (Records, Sealed)
 ├── pattern/            # Pattern Matching
 ├── strings/            # String API
@@ -51,21 +52,31 @@ src/main/java/org/nkcoder/
 
 ---
 
-### 3. streams/ - Streams & Functional Programming
+### 3. streams/ - Stream API
 
-| Status | Example                    | Concepts                                            |
-|--------|----------------------------|-----------------------------------------------------|
-| [x]    | StreamBasicsExample        | Creating streams, intermediate/terminal operations  |
-| [x]    | StreamCollectorsExample    | Collectors, groupingBy, partitioningBy, toMap       |
-| [x]    | ParallelStreamExample      | Parallel streams, when to use, pitfalls             |
-| [x]    | OptionalExample            | Optional creation, chaining, orElse vs orElseGet    |
-| [x]    | FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier, custom     |
-| [x]    | LambdaExample              | Lambda syntax, method references, effectively final |
-| [x]    | StreamAdvancedExample      | flatMap, reduce, takeWhile, dropWhile               |
+| Status | Example                 | Concepts                                           |
+|--------|-------------------------|----------------------------------------------------|
+| [x]    | StreamBasicsExample     | Creating streams, intermediate/terminal operations |
+| [x]    | StreamCollectorsExample | Collectors, groupingBy, partitioningBy, toMap      |
+| [x]    | ParallelStreamExample   | Parallel streams, when to use, pitfalls            |
+| [x]    | StreamAdvancedExample   | flatMap, reduce, takeWhile, dropWhile              |
 
 ---
 
-### 4. oop/ - OOP & Modern Classes
+### 4. fp/ - Functional Programming
+
+| Status | Example                    | Concepts                                            |
+|--------|----------------------------|-----------------------------------------------------|
+| [x]    | LambdaExample              | Lambda syntax, method references, effectively final |
+| [x]    | FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier, custom     |
+| [x]    | OptionalExample            | Optional creation, chaining, orElse vs orElseGet    |
+| [x]    | CurryingExample            | Currying, partial application, function factories   |
+| [x]    | MemoizationExample         | Caching pure functions, lazy computation, Fibonacci |
+| [x]    | MonadPatternsExample       | Try monad, Validation, railway-oriented programming |
+
+---
+
+### 5. oop/ - OOP & Modern Classes
 
 | Status | Example                   | Concepts                                            |
 |--------|---------------------------|-----------------------------------------------------|
@@ -78,7 +89,7 @@ src/main/java/org/nkcoder/
 
 ---
 
-### 5. pattern/ - Pattern Matching
+### 6. pattern/ - Pattern Matching
 
 | Status | Example                  | Concepts                                     |
 |--------|--------------------------|----------------------------------------------|
@@ -91,7 +102,7 @@ src/main/java/org/nkcoder/
 
 ---
 
-### 6. strings/ - String API
+### 7. strings/ - String API
 
 | Status | Example                   | Concepts                                            |
 |--------|---------------------------|-----------------------------------------------------|
@@ -103,7 +114,7 @@ src/main/java/org/nkcoder/
 
 ---
 
-### 7. generics/ - Generics
+### 8. generics/ - Generics
 
 | Status | Example               | Concepts                                    |
 |--------|-----------------------|---------------------------------------------|
@@ -115,7 +126,7 @@ src/main/java/org/nkcoder/
 
 ---
 
-### 8. exceptions/ - Exception Handling
+### 9. exceptions/ - Exception Handling
 
 | Status | Example                   | Concepts                                                       |
 |--------|---------------------------|----------------------------------------------------------------|
@@ -126,7 +137,7 @@ src/main/java/org/nkcoder/
 
 ---
 
-### 9. io/ - I/O & Networking
+### 10. io/ - I/O & Networking
 
 | Status | Example                   | Concepts                               |
 |--------|---------------------------|----------------------------------------|
@@ -142,11 +153,12 @@ src/main/java/org/nkcoder/
 |--------------|-------------|----------|
 | concurrency  | In Progress | 8/10     |
 | collections  | Complete    | 6/6      |
-| streams      | Not Started | 0/7      |
-| oop          | Not Started | 0/6      |
+| streams      | Complete    | 4/4      |
+| fp           | Complete    | 6/6      |
+| oop          | Complete    | 6/6      |
 | pattern      | Not Started | 0/6      |
 | strings      | Not Started | 0/5      |
 | generics     | Not Started | 0/5      |
 | exceptions   | Not Started | 0/4      |
 | io           | Not Started | 0/3      |
-| **Total**    |             | **14/52**|
+| **Total**    |             | **30/55**|

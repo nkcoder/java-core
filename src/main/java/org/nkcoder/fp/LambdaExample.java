@@ -1,4 +1,4 @@
-package org.nkcoder.streams;
+package org.nkcoder.fp;
 
 import java.util.Comparator;
 import java.util.List;
