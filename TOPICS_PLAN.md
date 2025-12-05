@@ -69,12 +69,12 @@ src/main/java/org/nkcoder/
 
 | Status | Example                   | Concepts                                            |
 |--------|---------------------------|-----------------------------------------------------|
-| [ ]    | RecordExample             | Record syntax, compact constructors, when to use    |
-| [ ]    | RecordAdvancedExample     | Record with validation, static methods, interfaces  |
-| [ ]    | SealedClassExample        | sealed, permits, non-sealed keywords                |
-| [ ]    | SealedWithRecordsExample  | Algebraic data types pattern                        |
-| [ ]    | InterfaceEvolutionExample | Default methods, static methods, private methods    |
-| [ ]    | InheritanceExample        | Extends vs implements, composition over inheritance |
+| [x]    | RecordExample             | Record syntax, compact constructors, when to use    |
+| [x]    | RecordAdvancedExample     | Record with validation, static methods, interfaces  |
+| [x]    | SealedClassExample        | sealed, permits, non-sealed keywords                |
+| [x]    | SealedWithRecordsExample  | Algebraic data types pattern                        |
+| [x]    | InterfaceEvolutionExample | Default methods, static methods, private methods    |
+| [x]    | InheritanceExample        | Extends vs implements, composition over inheritance |
 
 ---
 
