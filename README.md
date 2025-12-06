@@ -1,20 +1,22 @@
 # Java Core
 
-A Java learning repository covering core topics from Java 8 to Java 21. Organized by topics with self-contained, runnable examples.
+A comprehensive Java learning repository covering core topics for Java 25. Organized by topics with self-contained, runnable examples designed for interview preparation.
 
 ## Topics
 
-| Topic | Description | Progress |
-|-------|-------------|----------|
-| [concurrency](#concurrency) | Multithreading & Concurrency | 8/10 |
-| [collections](#collections) | Collections Framework | 6/6 |
-| [streams](#streams) | Streams & Functional Programming | 7/7 |
-| oop | OOP & Modern Classes (Records, Sealed) | 0/6 |
-| pattern | Pattern Matching | 0/6 |
-| strings | String API | 0/5 |
-| generics | Generics | 0/5 |
-| exceptions | Exception Handling | 0/4 |
-| io | I/O & Networking | 0/3 |
+| Topic                         | Description                  | Progress  |
+|-------------------------------|------------------------------|-----------|
+| [concurrency](#concurrency)   | Multithreading & Concurrency | 18/18     |
+| [collections](#collections)   | Collections Framework        | 6/6       |
+| [streams](#streams)           | Stream API                   | 4/4       |
+| [fp](#functional-programming) | Functional Programming       | 6/6       |
+| [oop](#oop--modern-classes)   | OOP & Modern Classes         | 6/6       |
+| [pattern](#pattern-matching)  | Pattern Matching             | 6/6       |
+| [strings](#strings)           | String API                   | 5/5       |
+| [generics](#generics)         | Generics                     | 5/5       |
+| [exceptions](#exceptions)     | Exception Handling           | 4/4       |
+| [io](#io--networking)         | I/O & Networking             | 4/4       |
+| **Total**                     |                              | **64/64** |
 
 ## Structure
 
@@ -22,7 +24,8 @@ A Java learning repository covering core topics from Java 8 to Java 21. Organize
 src/main/java/org/nkcoder/
 ├── concurrency/        # Multithreading & Concurrency
 ├── collections/        # Collections Framework
-├── streams/            # Streams & Functional Programming
+├── streams/            # Stream API
+├── fp/                 # Functional Programming
 ├── oop/                # OOP & Modern Classes
 ├── pattern/            # Pattern Matching
 ├── strings/            # String API
@@ -35,18 +38,32 @@ src/main/java/org/nkcoder/
 
 ## Concurrency
 
-Thread-safe programming from basics to advanced patterns.
+Thread-safe programming from basics to modern virtual threads.
 
-| Package | Examples | Concepts |
-|---------|----------|----------|
-| `thread/` | ThreadExample, DaemonThreadExample | Thread creation, lifecycle, daemon threads |
-| `synchronization/` | SynchronizedExample, VolatileExample | synchronized, volatile, wait/notify |
-| `locks/` | ReentrantLockDemo, ReadWriteLockExample | ReentrantLock, ReadWriteLock, Conditions |
-| `atomic/` | AtomicIntegerExample, AtomicReferenceExample | Atomic classes, CAS operations |
-| `executors/` | FixThreadPool, ScheduledThreadPool | ExecutorService, thread pools |
-| `concurrent_collections/` | CopyOnWriteListExample | Thread-safe collections |
-| `utilities/` | CountDownLatchExample, CyclicBarrierExample | Synchronization utilities |
-| `unsafe/` | ArrayListUnSafe, HashMapUnSafe | Thread-safety issues demonstration |
+### Modern (Java 21+)
+
+| Package    | Examples                     | Concepts                                 |
+|------------|------------------------------|------------------------------------------|
+| `virtual/` | VirtualThreadExample         | Virtual threads, lightweight concurrency |
+| `scoped/`  | ScopedValueExample           | ScopedValue (replaces ThreadLocal)       |
+| `preview/` | StructuredConcurrencyExample | StructuredTaskScope (preview)            |
+
+### Recommended
+
+| Package                   | Examples                                         | Concepts                           |
+|---------------------------|--------------------------------------------------|------------------------------------|
+| `executors/`              | ExecutorServiceExample, CompletableFutureExample | ExecutorService, async programming |
+| `atomic/`                 | AtomicIntegerExample, AtomicReferenceExample     | Atomic classes, CAS operations     |
+| `concurrent_collections/` | ConcurrentHashMapExample, CopyOnWriteListExample | Thread-safe collections            |
+
+### Foundational
+
+| Package            | Examples                                                | Concepts                     |
+|--------------------|---------------------------------------------------------|------------------------------|
+| `thread/`          | ThreadExample, DaemonThreadExample                      | Thread creation, lifecycle   |
+| `synchronization/` | SynchronizedExample, VolatileExample, WaitNotifyExample | synchronized, volatile       |
+| `locks/`           | ReentrantLockExample, ReadWriteLockExample              | ReentrantLock, ReadWriteLock |
+| `utilities/`       | CountDownLatchExample, SemaphoreExample                 | Synchronization utilities    |
 
 ---
 
@@ -54,30 +71,126 @@ Thread-safe programming from basics to advanced patterns.
 
 Java Collections Framework with Java 21 features.
 
-| Example | Concepts |
-|---------|----------|
-| ListExample | ArrayList, LinkedList, List.of(), List.copyOf() |
-| SetExample | HashSet, TreeSet, LinkedHashSet, Set.of() |
-| MapExample | HashMap, TreeMap, LinkedHashMap, Map.of() |
-| QueueExample | Queue, Deque, PriorityQueue |
-| SequencedCollectionExample | SequencedCollection, reversed(), getFirst/Last() |
-| ImmutableCollectionsExample | Unmodifiable collections, defensive copies |
+| Example                     | Concepts                                         |
+|-----------------------------|--------------------------------------------------|
+| ListExample                 | ArrayList, LinkedList, List.of(), List.copyOf()  |
+| SetExample                  | HashSet, TreeSet, LinkedHashSet, Set.of()        |
+| MapExample                  | HashMap, TreeMap, LinkedHashMap, Map.of()        |
+| QueueExample                | Queue, Deque, PriorityQueue                      |
+| SequencedCollectionExample  | SequencedCollection, reversed(), getFirst/Last() |
+| ImmutableCollectionsExample | Unmodifiable collections, defensive copies       |
 
 ---
 
 ## Streams
 
-Streams API and functional programming.
+Stream API for data processing pipelines.
 
-| Example | Concepts |
-|---------|----------|
-| StreamBasicsExample | Creating streams, intermediate/terminal operations |
-| StreamCollectorsExample | Collectors, groupingBy, partitioningBy, toMap |
-| ParallelStreamExample | Parallel streams, when to use, pitfalls |
-| OptionalExample | Optional creation, chaining, orElse vs orElseGet |
-| FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier |
-| LambdaExample | Lambda syntax, method references, effectively final |
-| StreamAdvancedExample | flatMap, reduce, takeWhile, dropWhile |
+| Example                 | Concepts                                           |
+|-------------------------|----------------------------------------------------|
+| StreamBasicsExample     | Creating streams, intermediate/terminal operations |
+| StreamCollectorsExample | Collectors, groupingBy, partitioningBy, toMap      |
+| StreamAdvancedExample   | flatMap, reduce, takeWhile, dropWhile              |
+| ParallelStreamExample   | Parallel streams, when to use, pitfalls            |
+
+---
+
+## Functional Programming
+
+Lambdas, functional interfaces, and FP patterns.
+
+| Example                    | Concepts                                            |
+|----------------------------|-----------------------------------------------------|
+| LambdaExample              | Lambda syntax, method references, effectively final |
+| FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier             |
+| OptionalExample            | Optional creation, chaining, orElse vs orElseGet    |
+| CurryingExample            | Currying, partial application, function factories   |
+| MemoizationExample         | Caching pure functions, lazy computation            |
+| MonadPatternsExample       | Try monad, Validation, railway-oriented programming |
+
+---
+
+## OOP & Modern Classes
+
+Records, sealed classes, and modern OOP patterns.
+
+| Example                   | Concepts                               |
+|---------------------------|----------------------------------------|
+| RecordExample             | Record syntax, compact constructors    |
+| RecordAdvancedExample     | Validation, static methods, interfaces |
+| SealedClassExample        | sealed, permits, non-sealed            |
+| SealedWithRecordsExample  | Algebraic data types pattern           |
+| InterfaceEvolutionExample | Default, static, private methods       |
+| InheritanceExample        | Composition over inheritance           |
+
+---
+
+## Pattern Matching
+
+Modern pattern matching (all finalized in Java 21+).
+
+| Example                  | Concepts                                |
+|--------------------------|-----------------------------------------|
+| InstanceofPatternExample | Pattern matching for instanceof         |
+| SwitchExpressionExample  | Switch expressions, arrow syntax, yield |
+| SwitchPatternExample     | Type patterns in switch, null handling  |
+| RecordPatternExample     | Deconstructing records, nested patterns |
+| GuardedPatternExample    | when clauses, guard conditions          |
+| ExhaustiveSwitchExample  | Sealed types + switch = exhaustiveness  |
+
+---
+
+## Strings
+
+String API with modern methods (Java 11+).
+
+| Example                 | Concepts                                 |
+|-------------------------|------------------------------------------|
+| StringBasicsExample     | Immutability, string pool, intern()      |
+| StringMethodsExample    | isBlank, strip, lines, repeat, indent    |
+| TextBlockExample        | Multi-line strings, indentation, escapes |
+| StringBuilderExample    | Mutable strings, StringJoiner            |
+| StringFormattingExample | format(), formatted(), printf, locales   |
+
+---
+
+## Generics
+
+Type-safe programming with generics.
+
+| Example               | Concepts                                      |
+|-----------------------|-----------------------------------------------|
+| GenericsBasicsExample | Generic classes, interfaces, diamond operator |
+| WildcardsExample      | ?, extends, super - PECS principle            |
+| TypeErasureExample    | How erasure works, limitations                |
+| BoundedTypesExample   | Upper/multiple bounds, Comparable             |
+| GenericMethodsExample | Static generic methods, type inference        |
+
+---
+
+## Exceptions
+
+Exception handling patterns.
+
+| Example                   | Concepts                             |
+|---------------------------|--------------------------------------|
+| TryWithResourcesExample   | AutoCloseable, suppressed exceptions |
+| CheckedVsUncheckedExample | When to use which, best practices    |
+| ExceptionChainingExample  | Cause, suppressed, stack traces      |
+| CustomExceptionExample    | Hierarchies, rich context            |
+
+---
+
+## I/O & Networking
+
+Modern file and network I/O (Java 11+).
+
+| Example                    | Concepts                               |
+|----------------------------|----------------------------------------|
+| PathAndFilesExample        | Path API, Files read/write, attributes |
+| DirectoryOperationsExample | walk, list, find, DirectoryStream      |
+| HttpClientExample          | HTTP Client API, sync/async requests   |
+| HttpClientAdvancedExample  | HTTP/2, authentication, cookies        |
 
 ---
 
@@ -87,9 +200,14 @@ Each class has a `main()` method:
 
 ```bash
 ./gradlew classes
-java -cp build/classes/java/main org.nkcoder.concurrency.thread.ThreadExample
+java -cp build/classes/java/main org.nkcoder.concurrency.virtual.VirtualThreadExample
 java -cp build/classes/java/main org.nkcoder.collections.ListExample
-java -cp build/classes/java/main org.nkcoder.streams.StreamBasicsExample
+java -cp build/classes/java/main org.nkcoder.pattern.SwitchPatternExample
+```
+
+For preview features:
+```bash
+java --enable-preview -cp build/classes/java/main org.nkcoder.concurrency.preview.StructuredConcurrencyExample
 ```
 
 ## Build
@@ -102,5 +220,5 @@ java -cp build/classes/java/main org.nkcoder.streams.StreamBasicsExample
 
 ## Requirements
 
-- Java 21+
+- Java 25+
 - Gradle 8+
