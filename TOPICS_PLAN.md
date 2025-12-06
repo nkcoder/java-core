@@ -33,9 +33,9 @@ src/main/java/org/nkcoder/
 
 **Preview (Experimental - API may change):**
 
-| Sub-package  | Status | Examples                      | Concepts                                 |
-|--------------|--------|-------------------------------|------------------------------------------|
-| preview/     | [x]    | StructuredConcurrencyExample  | StructuredTaskScope, Joiner (5th preview)|
+| Sub-package | Status | Examples                     | Concepts                                  |
+|-------------|--------|------------------------------|-------------------------------------------|
+| preview/    | [x]    | StructuredConcurrencyExample | StructuredTaskScope, Joiner (5th preview) |
 
 **Medium:**
 
@@ -47,12 +47,12 @@ src/main/java/org/nkcoder/
 
 **Foundational (Learn for interviews & legacy code, prefer modern alternatives for new code):**
 
-| Sub-package      | Status | Examples                                                      | Java 25 Recommendation                     |
-|------------------|--------|---------------------------------------------------------------|---------------------------------------------|
-| thread/          | [x]    | ThreadExample, DaemonThreadExample                            | ⚠️ Use ExecutorService or virtual threads   |
-| synchronization/ | [x]    | SynchronizedExample, VolatileExample, WaitNotifyExample       | ⚠️ Prefer Atomic*, locks, BlockingQueue     |
-| locks/           | [x]    | ReentrantLockExample, ReadWriteLockExample                    | ✅ Still relevant for advanced locking      |
-| utilities/       | [x]    | CountDownLatchExample, SemaphoreExample                       | ✅ Semaphore useful; Latch → structured concurrency |
+| Sub-package      | Status | Examples                                                | Java 25 Recommendation                             |
+|------------------|--------|---------------------------------------------------------|----------------------------------------------------|
+| thread/          | [x]    | ThreadExample, DaemonThreadExample                      | ⚠️ Use ExecutorService or virtual threads          |
+| synchronization/ | [x]    | SynchronizedExample, VolatileExample, WaitNotifyExample | ⚠️ Prefer Atomic*, locks, BlockingQueue            |
+| locks/           | [x]    | ReentrantLockExample, ReadWriteLockExample              | ✅ Still relevant for advanced locking              |
+| utilities/       | [x]    | CountDownLatchExample, SemaphoreExample                 | ✅ Semaphore useful; Latch → structured concurrency |
 
 **Why learn foundational concurrency?**
 - Interview questions still focus heavily on these concepts
@@ -126,13 +126,13 @@ Last resort: Raw threads, synchronized, wait/notify
 All pattern matching features below are **finalized and production-ready** in Java 25.
 
 | Status | Example                  | Concepts                                           | Java Version |
-|--------|--------------------------|-----------------------------------------------------|--------------|
-| [x]    | InstanceofPatternExample | Pattern matching for instanceof, flow scoping       | Java 16+     |
-| [x]    | SwitchExpressionExample  | Switch expressions, arrow syntax, yield             | Java 14+     |
-| [x]    | SwitchPatternExample     | Type patterns in switch, null handling, dominance   | Java 21+     |
-| [x]    | RecordPatternExample     | Deconstructing records, nested patterns, var        | Java 21+     |
-| [x]    | GuardedPatternExample    | when clauses, guard ordering, complex conditions    | Java 21+     |
-| [x]    | ExhaustiveSwitchExample  | Sealed types + switch = compiler-verified coverage  | Java 17/21+  |
+|--------|--------------------------|----------------------------------------------------|--------------|
+| [x]    | InstanceofPatternExample | Pattern matching for instanceof, flow scoping      | Java 16+     |
+| [x]    | SwitchExpressionExample  | Switch expressions, arrow syntax, yield            | Java 14+     |
+| [x]    | SwitchPatternExample     | Type patterns in switch, null handling, dominance  | Java 21+     |
+| [x]    | RecordPatternExample     | Deconstructing records, nested patterns, var       | Java 21+     |
+| [x]    | GuardedPatternExample    | when clauses, guard ordering, complex conditions   | Java 21+     |
+| [x]    | ExhaustiveSwitchExample  | Sealed types + switch = compiler-verified coverage | Java 17/21+  |
 
 ---
 
@@ -183,16 +183,16 @@ All pattern matching features below are **finalized and production-ready** in Ja
 
 ## Progress Summary
 
-| Topic        | Status      | Progress |
-|--------------|-------------|----------|
-| concurrency  | Complete    | 18/18    |
-| collections  | Complete    | 6/6      |
-| streams      | Complete    | 4/4      |
-| fp           | Complete    | 6/6      |
-| oop          | Complete    | 6/6      |
-| pattern      | Complete    | 6/6      |
-| strings      | Not Started | 0/5      |
-| generics     | Not Started | 0/5      |
-| exceptions   | Not Started | 0/4      |
-| io           | Not Started | 0/3      |
-| **Total**    |             | **46/63**|
+| Topic       | Status      | Progress  |
+|-------------|-------------|-----------|
+| concurrency | Complete    | 18/18     |
+| collections | Complete    | 6/6       |
+| streams     | Complete    | 4/4       |
+| fp          | Complete    | 6/6       |
+| oop         | Complete    | 6/6       |
+| pattern     | Complete    | 6/6       |
+| strings     | Not Started | 0/5       |
+| generics    | Not Started | 0/5       |
+| exceptions  | Not Started | 0/4       |
+| io          | Not Started | 0/3       |
+| **Total**   |             | **46/63** |
