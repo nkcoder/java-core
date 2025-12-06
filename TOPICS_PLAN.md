@@ -179,26 +179,29 @@ Core language feature for error handling. Essential for robust Java applications
 
 ### 10. io/ - I/O & Networking
 
-| Status | Example                   | Concepts                               |
-|--------|---------------------------|----------------------------------------|
-| [ ]    | FilesExample              | Files API, Path, reading/writing files |
-| [ ]    | HttpClientExample         | HTTP Client API (Java 11+), sync/async |
-| [ ]    | HttpClientAdvancedExample | HTTP/2, WebSocket, authentication      |
+Modern file and network I/O. All APIs shown are stable and recommended for Java 25.
+
+| Status | Example                      | Concepts                                              |
+|--------|------------------------------|-------------------------------------------------------|
+| [x]    | PathAndFilesExample          | Path API, Files read/write, attributes, copy/move     |
+| [x]    | DirectoryOperationsExample   | walk, list, find, DirectoryStream, FileVisitor        |
+| [x]    | HttpClientExample            | HTTP Client API (Java 11+), sync/async, body handlers |
+| [x]    | HttpClientAdvancedExample    | HTTP/2, authentication, cookies, file upload/download |
 
 ---
 
 ## Progress Summary
 
-| Topic       | Status      | Progress  |
-|-------------|-------------|-----------|
-| concurrency | Complete    | 18/18     |
-| collections | Complete    | 6/6       |
-| streams     | Complete    | 4/4       |
-| fp          | Complete    | 6/6       |
-| oop         | Complete    | 6/6       |
-| pattern     | Complete    | 6/6       |
-| strings     | Complete    | 5/5       |
-| generics    | Complete    | 5/5       |
-| exceptions  | Complete    | 4/4       |
-| io          | Not Started | 0/3       |
-| **Total**   |             | **60/63** |
+| Topic       | Status   | Progress  |
+|-------------|----------|-----------|
+| concurrency | Complete | 18/18     |
+| collections | Complete | 6/6       |
+| streams     | Complete | 4/4       |
+| fp          | Complete | 6/6       |
+| oop         | Complete | 6/6       |
+| pattern     | Complete | 6/6       |
+| strings     | Complete | 5/5       |
+| generics    | Complete | 5/5       |
+| exceptions  | Complete | 4/4       |
+| io          | Complete | 4/4       |
+| **Total**   | Complete | **64/64** |
