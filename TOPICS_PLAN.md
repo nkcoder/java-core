@@ -138,13 +138,15 @@ All pattern matching features below are **finalized and production-ready** in Ja
 
 ### 7. strings/ - String API
 
-| Status | Example                   | Concepts                                            |
-|--------|---------------------------|-----------------------------------------------------|
-| [ ]    | StringMethodsExample      | isBlank, lines, strip, repeat, indent (Java 11+)    |
-| [ ]    | TextBlockExample          | Multi-line strings, escaping, formatting (Java 15+) |
-| [ ]    | StringImmutabilityExample | Why strings are immutable, string pool              |
-| [ ]    | StringBuilderExample      | StringBuilder vs StringBuffer, when to use          |
-| [ ]    | StringFormattingExample   | String.format, formatted(), printf                  |
+Core feature for text handling. All methods shown are stable and widely used.
+
+| Status | Example                 | Concepts                                               |
+|--------|-------------------------|--------------------------------------------------------|
+| [x]    | StringMethodsExample    | isBlank, strip, lines, repeat, indent (Java 11+)       |
+| [x]    | TextBlockExample        | Multi-line strings, indentation, escapes (Java 15+)    |
+| [x]    | StringBasicsExample     | Immutability, string pool, intern(), == vs equals()    |
+| [x]    | StringBuilderExample    | Mutable strings, performance, StringJoiner             |
+| [x]    | StringFormattingExample | format(), formatted(), printf, locales, MessageFormat  |
 
 ---
 
@@ -195,8 +197,8 @@ Core language feature for error handling. Essential for robust Java applications
 | fp          | Complete    | 6/6       |
 | oop         | Complete    | 6/6       |
 | pattern     | Complete    | 6/6       |
-| strings     | Not Started | 0/5       |
+| strings     | Complete    | 5/5       |
 | generics    | Complete    | 5/5       |
 | exceptions  | Complete    | 4/4       |
 | io          | Not Started | 0/3       |
-| **Total**   |             | **55/63** |
+| **Total**   |             | **60/63** |
