@@ -150,13 +150,15 @@ All pattern matching features below are **finalized and production-ready** in Ja
 
 ### 8. generics/ - Generics
 
-| Status | Example               | Concepts                                    |
-|--------|-----------------------|---------------------------------------------|
-| [ ]    | GenericsBasicsExample | Generic classes, methods, type parameters   |
-| [ ]    | WildcardsExample      | ?, extends, super - PECS principle          |
-| [ ]    | TypeErasureExample    | How erasure works, limitations, workarounds |
-| [ ]    | BoundedTypesExample   | Upper/lower bounds, multiple bounds         |
-| [ ]    | GenericMethodsExample | Static generic methods, type inference      |
+Core language feature, unchanged since Java 5. Essential for type-safe programming.
+
+| Status | Example               | Concepts                                             |
+|--------|-----------------------|------------------------------------------------------|
+| [x]    | GenericsBasicsExample | Generic classes, interfaces, diamond operator        |
+| [x]    | WildcardsExample      | ?, extends, super - PECS principle, wildcard capture |
+| [x]    | TypeErasureExample    | How erasure works, limitations, workarounds          |
+| [x]    | BoundedTypesExample   | Upper/multiple bounds, recursive bounds, Comparable  |
+| [x]    | GenericMethodsExample | Static generic methods, type inference, varargs      |
 
 ---
 
@@ -192,7 +194,7 @@ All pattern matching features below are **finalized and production-ready** in Ja
 | oop         | Complete    | 6/6       |
 | pattern     | Complete    | 6/6       |
 | strings     | Not Started | 0/5       |
-| generics    | Not Started | 0/5       |
+| generics    | Complete    | 5/5       |
 | exceptions  | Not Started | 0/4       |
 | io          | Not Started | 0/3       |
-| **Total**   |             | **46/63** |
+| **Total**   |             | **51/63** |
