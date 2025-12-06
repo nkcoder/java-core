@@ -123,14 +123,16 @@ Last resort: Raw threads, synchronized, wait/notify
 
 ### 6. pattern/ - Pattern Matching
 
-| Status | Example                  | Concepts                                     |
-|--------|--------------------------|----------------------------------------------|
-| [ ]    | InstanceofPatternExample | Pattern matching for instanceof (Java 14+)   |
-| [ ]    | SwitchExpressionExample  | Switch expressions, arrow syntax, yield      |
-| [ ]    | SwitchPatternExample     | Pattern matching for switch (Java 17+)       |
-| [ ]    | RecordPatternExample     | Deconstructing records in patterns (Java 21) |
-| [ ]    | GuardedPatternExample    | when clauses in switch patterns              |
-| [ ]    | ExhaustiveSwitchExample  | Exhaustiveness with sealed types             |
+All pattern matching features below are **finalized and production-ready** in Java 25.
+
+| Status | Example                  | Concepts                                           | Java Version |
+|--------|--------------------------|-----------------------------------------------------|--------------|
+| [x]    | InstanceofPatternExample | Pattern matching for instanceof, flow scoping       | Java 16+     |
+| [x]    | SwitchExpressionExample  | Switch expressions, arrow syntax, yield             | Java 14+     |
+| [x]    | SwitchPatternExample     | Type patterns in switch, null handling, dominance   | Java 21+     |
+| [x]    | RecordPatternExample     | Deconstructing records, nested patterns, var        | Java 21+     |
+| [x]    | GuardedPatternExample    | when clauses, guard ordering, complex conditions    | Java 21+     |
+| [x]    | ExhaustiveSwitchExample  | Sealed types + switch = compiler-verified coverage  | Java 17/21+  |
 
 ---
 
@@ -188,9 +190,9 @@ Last resort: Raw threads, synchronized, wait/notify
 | streams      | Complete    | 4/4      |
 | fp           | Complete    | 6/6      |
 | oop          | Complete    | 6/6      |
-| pattern      | Not Started | 0/6      |
+| pattern      | Complete    | 6/6      |
 | strings      | Not Started | 0/5      |
 | generics     | Not Started | 0/5      |
 | exceptions   | Not Started | 0/4      |
 | io           | Not Started | 0/3      |
-| **Total**    |             | **40/63**|
+| **Total**    |             | **46/63**|
