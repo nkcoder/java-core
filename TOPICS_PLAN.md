@@ -164,12 +164,14 @@ Core language feature, unchanged since Java 5. Essential for type-safe programmi
 
 ### 9. exceptions/ - Exception Handling
 
-| Status | Example                   | Concepts                                                       |
-|--------|---------------------------|----------------------------------------------------------------|
-| [ ]    | TryWithResourcesExample   | AutoCloseable, resource management (Java 7+, enhanced Java 9+) |
-| [ ]    | CheckedVsUncheckedExample | When to use which, best practices                              |
-| [ ]    | ExceptionChainingExample  | Cause, suppressed exceptions                                   |
-| [ ]    | CustomExceptionExample    | Creating custom exceptions, best practices                     |
+Core language feature for error handling. Essential for robust Java applications.
+
+| Status | Example                   | Concepts                                            |
+|--------|---------------------------|-----------------------------------------------------|
+| [x]    | TryWithResourcesExample   | AutoCloseable, suppressed exceptions, Java 9+ style |
+| [x]    | CheckedVsUncheckedExample | When to use which, lambdas, modern best practices   |
+| [x]    | ExceptionChainingExample  | Cause, suppressed, stack traces, wrapping patterns  |
+| [x]    | CustomExceptionExample    | Hierarchies, rich context, builder pattern          |
 
 ---
 
@@ -195,6 +197,6 @@ Core language feature, unchanged since Java 5. Essential for type-safe programmi
 | pattern     | Complete    | 6/6       |
 | strings     | Not Started | 0/5       |
 | generics    | Complete    | 5/5       |
-| exceptions  | Not Started | 0/4       |
+| exceptions  | Complete    | 4/4       |
 | io          | Not Started | 0/3       |
-| **Total**   |             | **51/63** |
+| **Total**   |             | **55/63** |
