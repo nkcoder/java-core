@@ -5,7 +5,7 @@ A comprehensive Java learning repository covering core topics for Java 25. Organ
 ## Topics
 
 | Topic                         | Description                  | Progress  |
-|-------------------------------|------------------------------|-----------|
+| ----------------------------- | ---------------------------- | --------- |
 | [concurrency](#concurrency)   | Multithreading & Concurrency | 18/18     |
 | [collections](#collections)   | Collections Framework        | 6/6       |
 | [streams](#streams)           | Stream API                   | 4/4       |
@@ -43,7 +43,7 @@ Thread-safe programming from basics to modern virtual threads.
 ### Modern (Java 21+)
 
 | Package    | Examples                     | Concepts                                 |
-|------------|------------------------------|------------------------------------------|
+| ---------- | ---------------------------- | ---------------------------------------- |
 | `virtual/` | VirtualThreadExample         | Virtual threads, lightweight concurrency |
 | `scoped/`  | ScopedValueExample           | ScopedValue (replaces ThreadLocal)       |
 | `preview/` | StructuredConcurrencyExample | StructuredTaskScope (preview)            |
@@ -51,7 +51,7 @@ Thread-safe programming from basics to modern virtual threads.
 ### Recommended
 
 | Package                   | Examples                                         | Concepts                           |
-|---------------------------|--------------------------------------------------|------------------------------------|
+| ------------------------- | ------------------------------------------------ | ---------------------------------- |
 | `executors/`              | ExecutorServiceExample, CompletableFutureExample | ExecutorService, async programming |
 | `atomic/`                 | AtomicIntegerExample, AtomicReferenceExample     | Atomic classes, CAS operations     |
 | `concurrent_collections/` | ConcurrentHashMapExample, CopyOnWriteListExample | Thread-safe collections            |
@@ -59,7 +59,7 @@ Thread-safe programming from basics to modern virtual threads.
 ### Foundational
 
 | Package            | Examples                                                | Concepts                     |
-|--------------------|---------------------------------------------------------|------------------------------|
+| ------------------ | ------------------------------------------------------- | ---------------------------- |
 | `thread/`          | ThreadExample, DaemonThreadExample                      | Thread creation, lifecycle   |
 | `synchronization/` | SynchronizedExample, VolatileExample, WaitNotifyExample | synchronized, volatile       |
 | `locks/`           | ReentrantLockExample, ReadWriteLockExample              | ReentrantLock, ReadWriteLock |
@@ -72,7 +72,7 @@ Thread-safe programming from basics to modern virtual threads.
 Java Collections Framework with Java 21 features.
 
 | Example                     | Concepts                                         |
-|-----------------------------|--------------------------------------------------|
+| --------------------------- | ------------------------------------------------ |
 | ListExample                 | ArrayList, LinkedList, List.of(), List.copyOf()  |
 | SetExample                  | HashSet, TreeSet, LinkedHashSet, Set.of()        |
 | MapExample                  | HashMap, TreeMap, LinkedHashMap, Map.of()        |
@@ -87,7 +87,7 @@ Java Collections Framework with Java 21 features.
 Stream API for data processing pipelines.
 
 | Example                 | Concepts                                           |
-|-------------------------|----------------------------------------------------|
+| ----------------------- | -------------------------------------------------- |
 | StreamBasicsExample     | Creating streams, intermediate/terminal operations |
 | StreamCollectorsExample | Collectors, groupingBy, partitioningBy, toMap      |
 | StreamAdvancedExample   | flatMap, reduce, takeWhile, dropWhile              |
@@ -100,7 +100,7 @@ Stream API for data processing pipelines.
 Lambdas, functional interfaces, and FP patterns.
 
 | Example                    | Concepts                                            |
-|----------------------------|-----------------------------------------------------|
+| -------------------------- | --------------------------------------------------- |
 | LambdaExample              | Lambda syntax, method references, effectively final |
 | FunctionalInterfaceExample | Function, Predicate, Consumer, Supplier             |
 | OptionalExample            | Optional creation, chaining, orElse vs orElseGet    |
@@ -115,7 +115,7 @@ Lambdas, functional interfaces, and FP patterns.
 Records, sealed classes, and modern OOP patterns.
 
 | Example                   | Concepts                               |
-|---------------------------|----------------------------------------|
+| ------------------------- | -------------------------------------- |
 | RecordExample             | Record syntax, compact constructors    |
 | RecordAdvancedExample     | Validation, static methods, interfaces |
 | SealedClassExample        | sealed, permits, non-sealed            |
@@ -130,7 +130,7 @@ Records, sealed classes, and modern OOP patterns.
 Modern pattern matching (all finalized in Java 21+).
 
 | Example                  | Concepts                                |
-|--------------------------|-----------------------------------------|
+| ------------------------ | --------------------------------------- |
 | InstanceofPatternExample | Pattern matching for instanceof         |
 | SwitchExpressionExample  | Switch expressions, arrow syntax, yield |
 | SwitchPatternExample     | Type patterns in switch, null handling  |
@@ -145,7 +145,7 @@ Modern pattern matching (all finalized in Java 21+).
 String API with modern methods (Java 11+).
 
 | Example                 | Concepts                                 |
-|-------------------------|------------------------------------------|
+| ----------------------- | ---------------------------------------- |
 | StringBasicsExample     | Immutability, string pool, intern()      |
 | StringMethodsExample    | isBlank, strip, lines, repeat, indent    |
 | TextBlockExample        | Multi-line strings, indentation, escapes |
@@ -159,7 +159,7 @@ String API with modern methods (Java 11+).
 Type-safe programming with generics.
 
 | Example               | Concepts                                      |
-|-----------------------|-----------------------------------------------|
+| --------------------- | --------------------------------------------- |
 | GenericsBasicsExample | Generic classes, interfaces, diamond operator |
 | WildcardsExample      | ?, extends, super - PECS principle            |
 | TypeErasureExample    | How erasure works, limitations                |
@@ -173,7 +173,7 @@ Type-safe programming with generics.
 Exception handling patterns.
 
 | Example                   | Concepts                             |
-|---------------------------|--------------------------------------|
+| ------------------------- | ------------------------------------ |
 | TryWithResourcesExample   | AutoCloseable, suppressed exceptions |
 | CheckedVsUncheckedExample | When to use which, best practices    |
 | ExceptionChainingExample  | Cause, suppressed, stack traces      |
@@ -186,7 +186,7 @@ Exception handling patterns.
 Modern file and network I/O (Java 11+).
 
 | Example                    | Concepts                               |
-|----------------------------|----------------------------------------|
+| -------------------------- | -------------------------------------- |
 | PathAndFilesExample        | Path API, Files read/write, attributes |
 | DirectoryOperationsExample | walk, list, find, DirectoryStream      |
 | HttpClientExample          | HTTP Client API, sync/async requests   |
@@ -216,6 +216,7 @@ java --enable-preview -cp build/classes/java/main org.nkcoder.concurrency.previe
 ./gradlew build    # Build the project
 ./gradlew test     # Run tests
 ./gradlew clean    # Clean build artifacts
+./gradlew spotlessApply  # Format code
 ```
 
 ## Requirements

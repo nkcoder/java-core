@@ -105,12 +105,14 @@ public class FunctionalInterfaceExample {
         System.out.println("Short words starting with 'a': " + filtered);
 
         // Predicate.not() - static helper (Java 11+)
-        List<String> nonEmpty =
-                List.of("a", "", "b", "").stream().filter(Predicate.not(String::isEmpty)).toList();
+        List<String> nonEmpty = List.of("a", "", "b", "").stream()
+                .filter(Predicate.not(String::isEmpty))
+                .toList();
         System.out.println("Non-empty: " + nonEmpty);
 
         // Predicate.isEqual() - static helper
-        List<Integer> eqTo10 = Stream.of(1, 4, 10, 20, 11).filter(Predicate.isEqual(10)).toList();
+        List<Integer> eqTo10 =
+                Stream.of(1, 4, 10, 20, 11).filter(Predicate.isEqual(10)).toList();
         System.out.println("Equal to 10: " + eqTo10);
 
         System.out.println();
@@ -150,11 +152,10 @@ public class FunctionalInterfaceExample {
         System.out.println("Random with ref: " + randomRef.get());
 
         // Lazy initialization
-        Supplier<List<String>> heavyComputation =
-                () -> {
-                    System.out.println("  Computing...");
-                    return List.of("computed", "result");
-                };
+        Supplier<List<String>> heavyComputation = () -> {
+            System.out.println("  Computing...");
+            return List.of("computed", "result");
+        };
 
         System.out.println("Supplier created, not yet called");
         System.out.println("Calling get(): " + heavyComputation.get());
@@ -170,10 +171,9 @@ public class FunctionalInterfaceExample {
         System.out.println("=== Composing Functions ===");
 
         // Build a pipeline
-        Function<String, String> pipeline =
-                ((Function<String, String>) String::trim)
-                        .andThen(String::toLowerCase)
-                        .andThen(s -> s.replace(" ", "_"));
+        Function<String, String> pipeline = ((Function<String, String>) String::trim)
+                .andThen(String::toLowerCase)
+                .andThen(s -> s.replace(" ", "_"));
 
         String result = pipeline.apply("  Hello World  ");
         System.out.println("Pipeline result: " + result);
@@ -271,7 +271,7 @@ public class FunctionalInterfaceExample {
         // Currying: transform multi-arg function into chain of single-arg functions
         Function<Integer, Function<Integer, Integer>> curriedAdd = a -> b -> a + b;
         Function<Integer, Integer> add5 = curriedAdd.apply(5);
-        int result = add5.apply(6);   // 11
+        int result = add5.apply(6); // 11
         System.out.println("result from curriedAdd: " + result);
 
         // Configuration formatter
@@ -289,6 +289,7 @@ public class FunctionalInterfaceExample {
         System.out.println("sayHello: " + sayHello.apply("Hello"));
         System.out.println("sayGoodbye: " + sayGoodbye.apply("Goodbye"));
     }
+
     static <T, U, R> Function<U, R> partial(BiFunction<T, U, R> biFunc, T firstArg) {
         return u -> biFunc.apply(firstArg, u);
     }

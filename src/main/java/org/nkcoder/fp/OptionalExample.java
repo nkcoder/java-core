@@ -3,209 +3,195 @@ package org.nkcoder.fp;
 import java.util.List;
 import java.util.Optional;
 
-
 /**
  * Optional: container for potentially absent values.
  *
  * <ul>
- *   <li>Avoid null checks and NullPointerException</li>
- *   <li>{@code orElse} vs {@code orElseGet}: eager vs lazy default</li>
- *   <li>Never use Optional for fields or method parameters</li>
- *   <li>Use for return types when absence is valid outcome</li>
+ *   <li>Avoid null checks and NullPointerException
+ *   <li>{@code orElse} vs {@code orElseGet}: eager vs lazy default
+ *   <li>Never use Optional for fields or method parameters
+ *   <li>Use for return types when absence is valid outcome
  * </ul>
  */
 public class OptionalExample {
 
-  public static void main(String[] args) {
-    creatingOptionals();
-    extractingValues();
-    orElseVsOrElseGet();
-    chainingOperations();
-    optionalWithStreams();
-    antiPatterns();
-  }
-
-  static void creatingOptionals() {
-    System.out.println("=== Creating Optionals ===");
-
-    // From non-null value
-    Optional<String> present = Optional.of("hello");
-    System.out.println("of(): " + present);
-
-    // Empty optional
-    Optional<String> empty = Optional.empty();
-    System.out.println("empty(): " + empty);
-
-    // From nullable value (may be null)
-    String nullable = null;
-    Optional<String> fromNullable = Optional.ofNullable(nullable);
-    System.out.println("ofNullable(null): " + fromNullable);
-
-    String nonNull = "world";
-    Optional<String> fromNonNull = Optional.ofNullable(nonNull);
-    System.out.println("ofNullable(value): " + fromNonNull);
-
-    // of() with null throws NullPointerException!
-    try {
-      Optional.of(null);
-    } catch (NullPointerException e) {
-      System.out.println("of(null) throws NPE");
+    public static void main(String[] args) {
+        creatingOptionals();
+        extractingValues();
+        orElseVsOrElseGet();
+        chainingOperations();
+        optionalWithStreams();
+        antiPatterns();
     }
 
-    System.out.println();
-  }
+    static void creatingOptionals() {
+        System.out.println("=== Creating Optionals ===");
 
-  static void extractingValues() {
-    System.out.println("=== Extracting Values ===");
+        // From non-null value
+        Optional<String> present = Optional.of("hello");
+        System.out.println("of(): " + present);
 
-    Optional<String> present = Optional.of("hello");
-    Optional<String> empty = Optional.empty();
+        // Empty optional
+        Optional<String> empty = Optional.empty();
+        System.out.println("empty(): " + empty);
 
-    // isPresent / isEmpty (Java 11+)
-    System.out.println("isPresent: " + present.isPresent());
-    System.out.println("isEmpty: " + empty.isEmpty());
+        // From nullable value (may be null)
+        String nullable = null;
+        Optional<String> fromNullable = Optional.ofNullable(nullable);
+        System.out.println("ofNullable(null): " + fromNullable);
 
-    // get() - throws if empty (avoid!)
-    System.out.println("get(): " + present.get());
+        String nonNull = "world";
+        Optional<String> fromNonNull = Optional.ofNullable(nonNull);
+        System.out.println("ofNullable(value): " + fromNonNull);
 
-    // orElse - provide default value
-    System.out.println("orElse: " + empty.orElse("default"));
+        // of() with null throws NullPointerException!
+        try {
+            Optional.of(null);
+        } catch (NullPointerException e) {
+            System.out.println("of(null) throws NPE");
+        }
 
-    // orElseGet - lazy default (computed only if empty)
-    System.out.println("orElseGet: " + empty.orElseGet(() -> "computed"));
-
-    // orElseThrow - throw if empty
-    try {
-      empty.orElseThrow(() -> new IllegalStateException("Value required"));
-    } catch (IllegalStateException e) {
-      System.out.println("orElseThrow: " + e.getMessage());
+        System.out.println();
     }
 
-    // orElseThrow() no-arg (Java 10+) - throws NoSuchElementException
-    try {
-      empty.orElseThrow();
-    } catch (Exception e) {
-      System.out.println("orElseThrow(): " + e.getClass().getSimpleName());
+    static void extractingValues() {
+        System.out.println("=== Extracting Values ===");
+
+        Optional<String> present = Optional.of("hello");
+        Optional<String> empty = Optional.empty();
+
+        // isPresent / isEmpty (Java 11+)
+        System.out.println("isPresent: " + present.isPresent());
+        System.out.println("isEmpty: " + empty.isEmpty());
+
+        // get() - throws if empty (avoid!)
+        System.out.println("get(): " + present.get());
+
+        // orElse - provide default value
+        System.out.println("orElse: " + empty.orElse("default"));
+
+        // orElseGet - lazy default (computed only if empty)
+        System.out.println("orElseGet: " + empty.orElseGet(() -> "computed"));
+
+        // orElseThrow - throw if empty
+        try {
+            empty.orElseThrow(() -> new IllegalStateException("Value required"));
+        } catch (IllegalStateException e) {
+            System.out.println("orElseThrow: " + e.getMessage());
+        }
+
+        // orElseThrow() no-arg (Java 10+) - throws NoSuchElementException
+        try {
+            empty.orElseThrow();
+        } catch (Exception e) {
+            System.out.println("orElseThrow(): " + e.getClass().getSimpleName());
+        }
+
+        // ifPresent - execute action if present
+        present.ifPresent(v -> System.out.println("ifPresent: " + v));
+
+        // ifPresentOrElse (Java 9+)
+        empty.ifPresentOrElse(
+                v -> System.out.println("Value: " + v), () -> System.out.println("ifPresentOrElse: no value"));
+
+        System.out.println();
     }
 
-    // ifPresent - execute action if present
-    present.ifPresent(v -> System.out.println("ifPresent: " + v));
+    static void orElseVsOrElseGet() {
+        System.out.println("=== orElse vs orElseGet ===");
 
-    // ifPresentOrElse (Java 9+)
-    empty.ifPresentOrElse(
-        v -> System.out.println("Value: " + v),
-        () -> System.out.println("ifPresentOrElse: no value")
-    );
+        Optional<String> present = Optional.of("hello");
 
-    System.out.println();
-  }
+        // orElse ALWAYS evaluates default, even if not needed
+        System.out.println("orElse with present value:");
+        String result1 = present.orElse(expensiveDefault());
 
-  static void orElseVsOrElseGet() {
-    System.out.println("=== orElse vs orElseGet ===");
+        // orElseGet only evaluates if empty
+        System.out.println("orElseGet with present value:");
+        String result2 = present.orElseGet(() -> expensiveDefault());
 
-    Optional<String> present = Optional.of("hello");
+        System.out.println("Results: " + result1 + ", " + result2);
 
-    // orElse ALWAYS evaluates default, even if not needed
-    System.out.println("orElse with present value:");
-    String result1 = present.orElse(expensiveDefault());
+        System.out.println("Rule: Use orElseGet when default is expensive to compute");
 
-    // orElseGet only evaluates if empty
-    System.out.println("orElseGet with present value:");
-    String result2 = present.orElseGet(() -> expensiveDefault());
+        System.out.println();
+    }
 
-    System.out.println("Results: " + result1 + ", " + result2);
+    static String expensiveDefault() {
+        System.out.println("  Computing expensive default...");
+        return "expensive";
+    }
 
-    System.out.println("Rule: Use orElseGet when default is expensive to compute");
+    static void chainingOperations() {
+        System.out.println("=== Chaining Operations ===");
 
-    System.out.println();
-  }
+        Optional<String> name = Optional.of("  Alice  ");
 
-  static String expensiveDefault() {
-    System.out.println("  Computing expensive default...");
-    return "expensive";
-  }
+        // map - transform value if present
+        Optional<String> trimmed = name.map(String::trim);
+        Optional<Integer> length = name.map(String::trim).map(String::length);
+        System.out.println("map trim: " + trimmed);
+        System.out.println("map trim->length: " + length);
 
-  static void chainingOperations() {
-    System.out.println("=== Chaining Operations ===");
+        // filter - keep only if predicate matches
+        Optional<String> longName = name.map(String::trim).filter(s -> s.length() > 3);
+        System.out.println("filter length > 3: " + longName);
 
-    Optional<String> name = Optional.of("  Alice  ");
+        Optional<String> shortName = name.map(String::trim).filter(s -> s.length() > 10);
+        System.out.println("filter length > 10: " + shortName);
 
-    // map - transform value if present
-    Optional<String> trimmed = name.map(String::trim);
-    Optional<Integer> length = name.map(String::trim).map(String::length);
-    System.out.println("map trim: " + trimmed);
-    System.out.println("map trim->length: " + length);
+        // flatMap - when transformation returns Optional
+        Optional<String> upper = name.flatMap(s -> toUpperIfNotEmpty(s.trim()));
+        System.out.println("flatMap: " + upper);
 
-    // filter - keep only if predicate matches
-    Optional<String> longName = name
-        .map(String::trim)
-        .filter(s -> s.length() > 3);
-    System.out.println("filter length > 3: " + longName);
+        // or (Java 9+) - provide alternative Optional
+        Optional<String> empty = Optional.empty();
+        Optional<String> fallback = empty.or(() -> Optional.of("fallback"));
+        System.out.println("or: " + fallback);
 
-    Optional<String> shortName = name
-        .map(String::trim)
-        .filter(s -> s.length() > 10);
-    System.out.println("filter length > 10: " + shortName);
+        System.out.println();
+    }
 
-    // flatMap - when transformation returns Optional
-    Optional<String> upper = name.flatMap(s -> toUpperIfNotEmpty(s.trim()));
-    System.out.println("flatMap: " + upper);
+    static Optional<String> toUpperIfNotEmpty(String s) {
+        return s.isEmpty() ? Optional.empty() : Optional.of(s.toUpperCase());
+    }
 
-    // or (Java 9+) - provide alternative Optional
-    Optional<String> empty = Optional.empty();
-    Optional<String> fallback = empty.or(() -> Optional.of("fallback"));
-    System.out.println("or: " + fallback);
+    static void optionalWithStreams() {
+        System.out.println("=== Optional with Streams ===");
 
-    System.out.println();
-  }
+        List<Optional<String>> optionals =
+                List.of(Optional.of("a"), Optional.empty(), Optional.of("b"), Optional.empty(), Optional.of("c"));
 
-  static Optional<String> toUpperIfNotEmpty(String s) {
-    return s.isEmpty() ? Optional.empty() : Optional.of(s.toUpperCase());
-  }
+        // Filter and extract present values
+        List<String> values = optionals.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+        System.out.println("Filter + get: " + values);
 
-  static void optionalWithStreams() {
-    System.out.println("=== Optional with Streams ===");
+        // Better: flatMap with stream() (Java 9+)
+        List<String> values2 = optionals.stream().flatMap(Optional::stream).toList();
+        System.out.println("flatMap stream: " + values2);
 
-    List<Optional<String>> optionals = List.of(
-        Optional.of("a"),
-        Optional.empty(),
-        Optional.of("b"),
-        Optional.empty(),
-        Optional.of("c")
-    );
+        // Stream from single Optional
+        Optional<String> opt = Optional.of("hello");
+        opt.stream().forEach(s -> System.out.println("Optional stream: " + s));
 
-    // Filter and extract present values
-    List<String> values = optionals.stream()
-        .filter(Optional::isPresent)
-        .map(Optional::get)
-        .toList();
-    System.out.println("Filter + get: " + values);
+        // findFirst returns Optional
+        Optional<String> first = List.of("apple", "banana", "cherry").stream()
+                .filter(s -> s.startsWith("b"))
+                .findFirst();
+        System.out.println("findFirst: " + first);
 
-    // Better: flatMap with stream() (Java 9+)
-    List<String> values2 = optionals.stream()
-        .flatMap(Optional::stream)
-        .toList();
-    System.out.println("flatMap stream: " + values2);
+        System.out.println();
+    }
 
-    // Stream from single Optional
-    Optional<String> opt = Optional.of("hello");
-    opt.stream().forEach(s -> System.out.println("Optional stream: " + s));
+    static void antiPatterns() {
+        System.out.println("=== Anti-Patterns (Don't Do These!) ===");
 
-    // findFirst returns Optional
-    Optional<String> first = List.of("apple", "banana", "cherry").stream()
-        .filter(s -> s.startsWith("b"))
-        .findFirst();
-    System.out.println("findFirst: " + first);
+        Optional<String> opt = Optional.of("hello");
 
-    System.out.println();
-  }
-
-  static void antiPatterns() {
-    System.out.println("=== Anti-Patterns (Don't Do These!) ===");
-
-    Optional<String> opt = Optional.of("hello");
-
-    System.out.println("""
+        System.out.println("""
           1. DON'T: if (opt.isPresent()) { return opt.get(); }
              DO: return opt.orElse(default) or opt.map(...)
 
@@ -216,23 +202,21 @@ public class OptionalExample {
              DO: Use nullable fields with clear documentation
 
           4. DON'T: Use Optional as method parameter
-             DO: Use overloaded methods or @Nullable
-
-          5. DON'T: Return Optional<Collection>
+             DO: Use overloaded methods or @Nullable 5. DON'T: Return Optional<Collection>
              DO: Return empty collection instead
 
           6. DON'T: opt.get() without checking
              DO: orElse, orElseGet, orElseThrow
           """);
 
-    // Example: Prefer empty collection over Optional<List>
-    System.out.println("Return empty list, not Optional<List>:");
-    List<String> items = findItems();  // Returns empty list, not Optional
-    System.out.println("  Items: " + items);
-  }
+        // Example: Prefer empty collection over Optional<List>
+        System.out.println("Return empty list, not Optional<List>:");
+        List<String> items = findItems(); // Returns empty list, not Optional
+        System.out.println("  Items: " + items);
+    }
 
-  static List<String> findItems() {
-    // Return empty list instead of Optional<List<String>>
-    return List.of();
-  }
+    static List<String> findItems() {
+        // Return empty list instead of Optional<List<String>>
+        return List.of();
+    }
 }

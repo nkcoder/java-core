@@ -7,35 +7,35 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Daemon Threads: Background service threads that don't prevent JVM shutdown.
  *
- * <p><strong>Java 25 Note:</strong> Understanding daemon threads is useful for interviews and
- * legacy code, but modern applications typically use ExecutorService with proper shutdown hooks.
+ * <p><strong>Java 25 Note:</strong> Understanding daemon threads is useful for interviews and legacy code, but modern
+ * applications typically use ExecutorService with proper shutdown hooks.
  *
  * <p>Key concepts:
+ *
  * <ul>
- *   <li>JVM exits when only daemon threads remain</li>
- *   <li>Daemon threads are abruptly terminated on JVM shutdown</li>
- *   <li>Must be set before thread starts</li>
- *   <li>Use for background services (GC, housekeeping)</li>
+ *   <li>JVM exits when only daemon threads remain
+ *   <li>Daemon threads are abruptly terminated on JVM shutdown
+ *   <li>Must be set before thread starts
+ *   <li>Use for background services (GC, housekeeping)
  * </ul>
  *
- * <p>Interview tip: Know when to use daemon threads and understand
- * the implications of abrupt termination.
+ * <p>Interview tip: Know when to use daemon threads and understand the implications of abrupt termination.
  */
 public class DaemonThreadExample {
 
-  static void main(String[] args) throws Exception {
-    whatAreDaemonThreads();
-    daemonVsUserThreads();
-    settingDaemonStatus();
-    daemonWithExecutors();
-    useCases();
-    bestPractices();
-  }
+    static void main(String[] args) throws Exception {
+        whatAreDaemonThreads();
+        daemonVsUserThreads();
+        settingDaemonStatus();
+        daemonWithExecutors();
+        useCases();
+        bestPractices();
+    }
 
-  static void whatAreDaemonThreads() {
-    System.out.println("=== What Are Daemon Threads? ===");
+    static void whatAreDaemonThreads() {
+        System.out.println("=== What Are Daemon Threads? ===");
 
-    System.out.println("""
+        System.out.println("""
         Two types of threads in Java:
 
         User Threads (default):
@@ -52,143 +52,142 @@ public class DaemonThreadExample {
         Key point: When all user threads finish, JVM exits immediately,
         killing any running daemon threads without cleanup!
         """);
-  }
-
-  static void daemonVsUserThreads() throws Exception {
-    System.out.println("=== Daemon vs User Threads ===");
-
-    // User thread - JVM would wait for it
-    Thread userThread = new Thread(() -> {
-      for (int i = 0; i < 3; i++) {
-        System.out.println("    User thread: " + i);
-        sleep(50);
-      }
-      System.out.println("    User thread completed");
-    });
-    userThread.setName("user-thread");
-
-    // Daemon thread - JVM won't wait for it
-    Thread daemonThread = new Thread(() -> {
-      for (int i = 0; i < 100; i++) { // Would run 100 times if allowed
-        System.out.println("    Daemon thread: " + i);
-        sleep(50);
-      }
-      System.out.println("    Daemon thread completed (may never print!)");
-    });
-    daemonThread.setName("daemon-thread");
-    daemonThread.setDaemon(true);
-
-    System.out.println("  User thread isDaemon: " + userThread.isDaemon());
-    System.out.println("  Daemon thread isDaemon: " + daemonThread.isDaemon());
-
-    daemonThread.start();
-    userThread.start();
-
-    // Wait for user thread only
-    userThread.join();
-    System.out.println("  User thread done. Daemon may still be running...");
-
-    // Give daemon a moment to show it's still running
-    Thread.sleep(100);
-    System.out.println("  Daemon alive: " + daemonThread.isAlive());
-
-    // In a real scenario, if main() returned here and there were no other
-    // user threads, the JVM would exit and kill the daemon thread
-
-    System.out.println();
-  }
-
-  static void settingDaemonStatus() throws Exception {
-    System.out.println("=== Setting Daemon Status ===");
-
-    // Must set daemon BEFORE starting the thread
-    Thread thread = new Thread(() -> {
-      System.out.println("    Running as daemon: " + Thread.currentThread().isDaemon());
-    });
-
-    thread.setDaemon(true);
-    thread.start();
-    thread.join();
-
-    // Trying to set daemon after start throws exception
-    Thread runningThread = new Thread(() -> sleep(1000));
-    runningThread.start();
-
-    try {
-      runningThread.setDaemon(true);
-    } catch (IllegalThreadStateException e) {
-      System.out.println("  Cannot setDaemon after start: " + e.getClass().getSimpleName());
     }
 
-    runningThread.interrupt();
+    static void daemonVsUserThreads() throws Exception {
+        System.out.println("=== Daemon vs User Threads ===");
 
-    // Child threads inherit daemon status from parent
-    Thread parentDaemon = new Thread(() -> {
-      Thread child = new Thread(() -> {});
-      System.out.println("  Child of daemon inherits: isDaemon=" + child.isDaemon());
-    });
-    parentDaemon.setDaemon(true);
-    parentDaemon.start();
-    parentDaemon.join();
-
-    // Using Thread builder (Java 21+)
-    Thread builderDaemon = Thread.ofPlatform()
-        .daemon(true)
-        .name("builder-daemon")
-        .unstarted(() -> {
-          System.out.println("  Builder daemon running: " +
-              Thread.currentThread().isDaemon());
+        // User thread - JVM would wait for it
+        Thread userThread = new Thread(() -> {
+            for (int i = 0; i < 3; i++) {
+                System.out.println("    User thread: " + i);
+                sleep(50);
+            }
+            System.out.println("    User thread completed");
         });
-    builderDaemon.start();
-    builderDaemon.join();
+        userThread.setName("user-thread");
 
-    System.out.println();
-  }
+        // Daemon thread - JVM won't wait for it
+        Thread daemonThread = new Thread(() -> {
+            for (int i = 0; i < 100; i++) { // Would run 100 times if allowed
+                System.out.println("    Daemon thread: " + i);
+                sleep(50);
+            }
+            System.out.println("    Daemon thread completed (may never print!)");
+        });
+        daemonThread.setName("daemon-thread");
+        daemonThread.setDaemon(true);
 
-  static void daemonWithExecutors() throws Exception {
-    System.out.println("=== Daemon Threads with Executors ===");
+        System.out.println("  User thread isDaemon: " + userThread.isDaemon());
+        System.out.println("  Daemon thread isDaemon: " + daemonThread.isDaemon());
 
-    // Custom ThreadFactory for daemon threads
-    ThreadFactory daemonFactory = runnable -> {
-      Thread thread = new Thread(runnable);
-      thread.setDaemon(true);
-      thread.setName("daemon-worker");
-      return thread;
-    };
+        daemonThread.start();
+        userThread.start();
 
-    ExecutorService daemonExecutor = Executors.newFixedThreadPool(2, daemonFactory);
+        // Wait for user thread only
+        userThread.join();
+        System.out.println("  User thread done. Daemon may still be running...");
 
-    daemonExecutor.submit(() -> {
-      System.out.println("    Task on daemon thread: " +
-          Thread.currentThread().isDaemon());
-    });
+        // Give daemon a moment to show it's still running
+        Thread.sleep(100);
+        System.out.println("  Daemon alive: " + daemonThread.isAlive());
 
-    Thread.sleep(100);
-    daemonExecutor.shutdown();
+        // In a real scenario, if main() returned here and there were no other
+        // user threads, the JVM would exit and kill the daemon thread
 
-    // Using Thread.ofPlatform().factory()
-    ThreadFactory platformDaemonFactory = Thread.ofPlatform()
-        .daemon(true)
-        .name("platform-daemon-", 0)
-        .factory();
+        System.out.println();
+    }
 
-    ExecutorService executor2 = Executors.newFixedThreadPool(2, platformDaemonFactory);
-    executor2.submit(() -> {
-      System.out.println("    Platform daemon factory: " +
-          Thread.currentThread().getName() + ", daemon=" +
-          Thread.currentThread().isDaemon());
-    });
+    static void settingDaemonStatus() throws Exception {
+        System.out.println("=== Setting Daemon Status ===");
 
-    Thread.sleep(100);
-    executor2.shutdown();
+        // Must set daemon BEFORE starting the thread
+        Thread thread = new Thread(() -> {
+            System.out.println(
+                    "    Running as daemon: " + Thread.currentThread().isDaemon());
+        });
 
-    System.out.println();
-  }
+        thread.setDaemon(true);
+        thread.start();
+        thread.join();
 
-  static void useCases() {
-    System.out.println("=== Use Cases for Daemon Threads ===");
+        // Trying to set daemon after start throws exception
+        Thread runningThread = new Thread(() -> sleep(1000));
+        runningThread.start();
 
-    System.out.println("""
+        try {
+            runningThread.setDaemon(true);
+        } catch (IllegalThreadStateException e) {
+            System.out.println("  Cannot setDaemon after start: " + e.getClass().getSimpleName());
+        }
+
+        runningThread.interrupt();
+
+        // Child threads inherit daemon status from parent
+        Thread parentDaemon = new Thread(() -> {
+            Thread child = new Thread(() -> {});
+            System.out.println("  Child of daemon inherits: isDaemon=" + child.isDaemon());
+        });
+        parentDaemon.setDaemon(true);
+        parentDaemon.start();
+        parentDaemon.join();
+
+        // Using Thread builder (Java 21+)
+        Thread builderDaemon = Thread.ofPlatform()
+                .daemon(true)
+                .name("builder-daemon")
+                .unstarted(() -> {
+                    System.out.println("  Builder daemon running: "
+                            + Thread.currentThread().isDaemon());
+                });
+        builderDaemon.start();
+        builderDaemon.join();
+
+        System.out.println();
+    }
+
+    static void daemonWithExecutors() throws Exception {
+        System.out.println("=== Daemon Threads with Executors ===");
+
+        // Custom ThreadFactory for daemon threads
+        ThreadFactory daemonFactory = runnable -> {
+            Thread thread = new Thread(runnable);
+            thread.setDaemon(true);
+            thread.setName("daemon-worker");
+            return thread;
+        };
+
+        ExecutorService daemonExecutor = Executors.newFixedThreadPool(2, daemonFactory);
+
+        daemonExecutor.submit(() -> {
+            System.out.println(
+                    "    Task on daemon thread: " + Thread.currentThread().isDaemon());
+        });
+
+        Thread.sleep(100);
+        daemonExecutor.shutdown();
+
+        // Using Thread.ofPlatform().factory()
+        ThreadFactory platformDaemonFactory =
+                Thread.ofPlatform().daemon(true).name("platform-daemon-", 0).factory();
+
+        ExecutorService executor2 = Executors.newFixedThreadPool(2, platformDaemonFactory);
+        executor2.submit(() -> {
+            System.out.println(
+                    "    Platform daemon factory: " + Thread.currentThread().getName() + ", daemon="
+                            + Thread.currentThread().isDaemon());
+        });
+
+        Thread.sleep(100);
+        executor2.shutdown();
+
+        System.out.println();
+    }
+
+    static void useCases() {
+        System.out.println("=== Use Cases for Daemon Threads ===");
+
+        System.out.println("""
         Good use cases for daemon threads:
 
         1. Background Services:
@@ -210,31 +209,31 @@ public class DaemonThreadExample {
         Example - Background cache cleanup:
         """);
 
-    // Example: Background cleanup daemon
-    Thread cleanupDaemon = new Thread(() -> {
-      while (!Thread.currentThread().isInterrupted()) {
-        System.out.println("    [Cleanup] Running periodic cleanup...");
-        sleep(100);
-      }
-    });
-    cleanupDaemon.setDaemon(true);
-    cleanupDaemon.setName("cache-cleanup");
-    cleanupDaemon.start();
+        // Example: Background cleanup daemon
+        Thread cleanupDaemon = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("    [Cleanup] Running periodic cleanup...");
+                sleep(100);
+            }
+        });
+        cleanupDaemon.setDaemon(true);
+        cleanupDaemon.setName("cache-cleanup");
+        cleanupDaemon.start();
 
-    // Main work continues...
-    sleep(250);
-    System.out.println("    [Main] Application work done");
-    // If this were the last user thread, JVM would exit here
+        // Main work continues...
+        sleep(250);
+        System.out.println("    [Main] Application work done");
+        // If this were the last user thread, JVM would exit here
 
-    cleanupDaemon.interrupt();
+        cleanupDaemon.interrupt();
 
-    System.out.println();
-  }
+        System.out.println();
+    }
 
-  static void bestPractices() {
-    System.out.println("=== Best Practices ===");
+    static void bestPractices() {
+        System.out.println("=== Best Practices ===");
 
-    System.out.println("""
+        System.out.println("""
         DO:
         - Use for truly background, non-critical tasks
         - Set daemon status before starting thread
@@ -263,13 +262,13 @@ public class DaemonThreadExample {
         - Network requests with responses
         - Any task that must finish
         """);
-  }
-
-  private static void sleep(long ms) {
-    try {
-      Thread.sleep(ms);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
     }
-  }
+
+    private static void sleep(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }
