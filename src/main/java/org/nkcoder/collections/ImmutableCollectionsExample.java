@@ -2,7 +2,6 @@ package org.nkcoder.collections;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,10 +10,10 @@ import java.util.Set;
  * Immutable and unmodifiable collections.
  *
  * <ul>
- *   <li>{@code List.of()}, {@code Set.of()}, {@code Map.of()}: truly immutable (Java 9+)</li>
- *   <li>{@code Collections.unmodifiableXxx()}: unmodifiable view of mutable collection</li>
- *   <li>{@code List.copyOf()}: immutable copy (Java 10+)</li>
- *   <li>Defensive copies: protect internal state from external modification</li>
+ * <li>{@code List.of()}, {@code Set.of()}, {@code Map.of()}: truly immutable (Java 9+)</li>
+ * <li>{@code Collections.unmodifiableXxx()}: unmodifiable view of mutable collection</li>
+ * <li>{@code List.copyOf()}: immutable copy (Java 10+)</li>
+ * <li>Defensive copies: protect internal state from external modification</li>
  * </ul>
  */
 public class ImmutableCollectionsExample {
@@ -80,7 +79,7 @@ public class ImmutableCollectionsExample {
     mutable.add("d");
     System.out.println("After modifying original:");
     System.out.println("  Original: " + mutable);
-    System.out.println("  View: " + unmodifiable);  // Also shows "d"!
+    System.out.println("  View: " + unmodifiable); // Also shows "d"!
   }
 
   static void copyOfExample() {
@@ -91,14 +90,14 @@ public class ImmutableCollectionsExample {
     // Creates independent immutable copy
     List<String> copy = List.copyOf(mutable);
 
-    mutable.add("d");  // Original modified
+    mutable.add("d"); // Original modified
     System.out.println("Original (modified): " + mutable);
     System.out.println("Copy (unchanged): " + copy);
 
     // copyOf on already immutable returns same instance (optimization)
     List<String> immutable = List.of("x", "y");
     List<String> copyOfImmutable = List.copyOf(immutable);
-    System.out.println("Same instance: " + (immutable == copyOfImmutable));   // true
+    System.out.println("Same instance: " + (immutable == copyOfImmutable)); // true
 
     // Works with Set and Map too
     Set<String> setCopy = Set.copyOf(Set.of("1", "2", "3"));
@@ -119,13 +118,13 @@ public class ImmutableCollectionsExample {
       }
 
       List<String> getItems() {
-        return items;  // Exposes internal state!
+        return items; // Exposes internal state!
       }
     }
 
     BadClass bad = new BadClass();
     bad.addItem("secret");
-    bad.getItems().clear();  // External code can modify internal state!
+    bad.getItems().clear(); // External code can modify internal state!
     System.out.println("BadClass items after external clear: " + bad.getItems());
 
     // Good: returning defensive copy or unmodifiable view

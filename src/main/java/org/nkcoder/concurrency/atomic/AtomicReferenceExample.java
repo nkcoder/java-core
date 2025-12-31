@@ -9,16 +9,18 @@ import java.util.concurrent.atomic.AtomicStampedReference;
 /**
  * AtomicReference: Lock-free thread-safe object reference operations.
  *
- * <p>Key concepts:
+ * <p>
+ * Key concepts:
  * <ul>
- *   <li>CAS operations on object references</li>
- *   <li>Building lock-free data structures</li>
- *   <li>ABA problem and solutions (stamped/markable references)</li>
- *   <li>Immutable objects work best with atomic references</li>
+ * <li>CAS operations on object references</li>
+ * <li>Building lock-free data structures</li>
+ * <li>ABA problem and solutions (stamped/markable references)</li>
+ * <li>Immutable objects work best with atomic references</li>
  * </ul>
  *
- * <p>Interview tip: Understand the ABA problem and when to use
- * AtomicStampedReference vs AtomicMarkableReference.
+ * <p>
+ * Interview tip: Understand the ABA problem and when to use AtomicStampedReference vs
+ * AtomicMarkableReference.
  */
 public class AtomicReferenceExample {
 
@@ -36,7 +38,8 @@ public class AtomicReferenceExample {
   static void basicOperations() {
     System.out.println("=== Basic Operations ===");
 
-    record User(String name, int age) {}
+    record User(String name, int age) {
+    }
 
     AtomicReference<User> userRef = new AtomicReference<>(new User("Alice", 30));
 
@@ -57,11 +60,10 @@ public class AtomicReferenceExample {
   static void compareAndSetForObjects() {
     System.out.println("=== Compare-And-Set for Objects ===");
 
-    record Config(String env, int timeout) {}
+    record Config(String env, int timeout) {
+    }
 
-    AtomicReference<Config> configRef = new AtomicReference<>(
-        new Config("dev", 1000)
-    );
+    AtomicReference<Config> configRef = new AtomicReference<>(new Config("dev", 1000));
 
     Config current = configRef.get();
     Config updated = new Config("prod", 5000);
@@ -90,7 +92,8 @@ public class AtomicReferenceExample {
   static void updateAndAccumulate() {
     System.out.println("=== Update and Accumulate ===");
 
-    record Counter(int value) {}
+    record Counter(int value) {
+    }
 
     AtomicReference<Counter> ref = new AtomicReference<>(new Counter(0));
 
@@ -103,10 +106,8 @@ public class AtomicReferenceExample {
     System.out.println("  getAndUpdate (*2): old=" + old + ", new=" + ref.get());
 
     // accumulateAndGet - combine with another value
-    Counter combined = ref.accumulateAndGet(
-        new Counter(10),
-        (current, given) -> new Counter(current.value() + given.value())
-    );
+    Counter combined = ref.accumulateAndGet(new Counter(10),
+        (current, given) -> new Counter(current.value() + given.value()));
     System.out.println("  accumulateAndGet (+10): " + combined);
 
     System.out.println();
@@ -177,11 +178,10 @@ public class AtomicReferenceExample {
 
     // Wraps reference + boolean mark
     // Useful for: marked-for-deletion, logical deletion
-    record Node(int value) {}
+    record Node(int value) {
+    }
 
-    AtomicMarkableReference<Node> ref = new AtomicMarkableReference<>(
-        new Node(42), false
-    );
+    AtomicMarkableReference<Node> ref = new AtomicMarkableReference<>(new Node(42), false);
 
     // Get value and mark
     boolean[] markHolder = new boolean[1];
@@ -221,11 +221,13 @@ public class AtomicReferenceExample {
 
     // Simple lock-free stack using AtomicReference
     class LockFreeStack<T> {
-      private static class Node<T> {
+      class Node<T> {
         final T value;
         Node<T> next;
 
-        Node(T value) { this.value = value; }
+        Node(T value) {
+          this.value = value;
+        }
       }
 
       private final AtomicReference<Node<T>> top = new AtomicReference<>();
@@ -244,7 +246,8 @@ public class AtomicReferenceExample {
         Node<T> newTop;
         do {
           oldTop = top.get();
-          if (oldTop == null) return null;
+          if (oldTop == null)
+            return null;
           newTop = oldTop.next;
         } while (!top.compareAndSet(oldTop, newTop));
         return oldTop.value;
@@ -263,7 +266,8 @@ public class AtomicReferenceExample {
 
     // Pop all
     int count = 0;
-    while (stack.pop() != null) count++;
+    while (stack.pop() != null)
+      count++;
     System.out.println("  Pushed 100, popped: " + count);
 
     System.out.println("""
