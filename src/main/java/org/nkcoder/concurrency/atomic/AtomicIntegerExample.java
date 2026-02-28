@@ -8,16 +8,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * AtomicInteger: Lock-free thread-safe integer operations.
  *
- * <p>Key concepts:
+ * <p>
+ * Key concepts:
  *
  * <ul>
- *   <li>Uses CAS (Compare-And-Swap) hardware instructions
- *   <li>No locks, no blocking - better performance under contention
- *   <li>Individual operations are atomic, not compound operations
- *   <li>Great for counters, sequence generators, statistics
+ * <li>Uses CAS (Compare-And-Swap) hardware instructions
+ * <li>No locks, no blocking - better performance under contention
+ * <li>Individual operations are atomic, not compound operations
+ * <li>Great for counters, sequence generators, statistics
  * </ul>
  *
- * <p>Interview tip: Understand CAS and why incrementAndGet is atomic but get() followed by set() is not.
+ * <p>
+ * Interview tip: Understand CAS and why incrementAndGet is atomic but get() followed by set() is
+ * not.
  */
 public class AtomicIntegerExample {
 
@@ -67,7 +70,7 @@ public class AtomicIntegerExample {
         BrokenCounter broken = new BrokenCounter();
         try (ExecutorService executor = Executors.newFixedThreadPool(threads)) {
             for (int i = 0; i < iterations; i++) {
-                executor.submit(broken::increment);
+                executor.submit(() -> broken.increment());
             }
         }
         System.out.println("  Broken counter: " + broken.get() + " (expected " + iterations + ")");
@@ -83,14 +86,14 @@ public class AtomicIntegerExample {
 
         System.out.println("""
 
-        Why count++ is not atomic:
-        1. Read current value from memory
-        2. Add 1 to the value
-        3. Write new value back to memory
+                Why count++ is not atomic:
+                1. Read current value from memory
+                2. Add 1 to the value
+                3. Write new value back to memory
 
-        Two threads can read the same value, both add 1,
-        and both write back - losing one increment!
-        """);
+                Two threads can read the same value, both add 1,
+                and both write back - losing one increment!
+                """);
     }
 
     static void basicOperations() {
@@ -143,12 +146,12 @@ public class AtomicIntegerExample {
 
         System.out.println("""
 
-        Pattern:
-        - getAndXxx(): Returns OLD value, then applies operation
-        - xxxAndGet(): Applies operation, then returns NEW value
+                Pattern:
+                - getAndXxx(): Returns OLD value, then applies operation
+                - xxxAndGet(): Applies operation, then returns NEW value
 
-        All operations are atomic (single CAS instruction).
-        """);
+                All operations are atomic (single CAS instruction).
+                """);
     }
 
     static void compareAndSet() {
@@ -175,13 +178,13 @@ public class AtomicIntegerExample {
 
         System.out.println("""
 
-        CAS is the foundation of lock-free algorithms:
-        1. Read current value
-        2. Compute new value
-        3. CAS: if still same, update; else retry
+                CAS is the foundation of lock-free algorithms:
+                1. Read current value
+                2. Compute new value
+                3. CAS: if still same, update; else retry
 
-        This is what incrementAndGet() does internally!
-        """);
+                This is what incrementAndGet() does internally!
+                """);
     }
 
     static void accumulateAndUpdate() {
@@ -209,12 +212,12 @@ public class AtomicIntegerExample {
 
         System.out.println("""
 
-        These methods handle the CAS loop internally:
-        - updateAndGet(): f(current) -> new
-        - accumulateAndGet(): f(current, given) -> new
+                These methods handle the CAS loop internally:
+                - updateAndGet(): f(current) -> new
+                - accumulateAndGet(): f(current, given) -> new
 
-        Cleaner than writing your own CAS loop!
-        """);
+                Cleaner than writing your own CAS loop!
+                """);
     }
 
     static void atomicVsSynchronized() throws Exception {
@@ -262,59 +265,59 @@ public class AtomicIntegerExample {
 
         System.out.println("""
 
-        +-------------------+-----------------------+-----------------------+
-        | Feature           | synchronized          | AtomicInteger         |
-        +-------------------+-----------------------+-----------------------+
-        | Mechanism         | Lock (monitor)        | CAS (hardware)        |
-        | Blocking          | Yes                   | No (spins/retries)    |
-        | Compound ops      | Yes (any code block)  | Limited (single op)   |
-        | Contention        | Slower (waiting)      | Faster (retrying)     |
-        | Memory visibility | Full barrier          | Volatile semantics    |
-        +-------------------+-----------------------+-----------------------+
+                +-------------------+-----------------------+-----------------------+
+                | Feature           | synchronized          | AtomicInteger         |
+                +-------------------+-----------------------+-----------------------+
+                | Mechanism         | Lock (monitor)        | CAS (hardware)        |
+                | Blocking          | Yes                   | No (spins/retries)    |
+                | Compound ops      | Yes (any code block)  | Limited (single op)   |
+                | Contention        | Slower (waiting)      | Faster (retrying)     |
+                | Memory visibility | Full barrier          | Volatile semantics    |
+                +-------------------+-----------------------+-----------------------+
 
-        Use Atomic when:
-        - Single variable updates
-        - Simple increment/compare operations
-        - High contention expected
+                Use Atomic when:
+                - Single variable updates
+                - Simple increment/compare operations
+                - High contention expected
 
-        Use synchronized when:
-        - Multiple variables must update together
-        - Complex logic in critical section
-        - Need to wait on conditions
-        """);
+                Use synchronized when:
+                - Multiple variables must update together
+                - Complex logic in critical section
+                - Need to wait on conditions
+                """);
     }
 
     static void bestPractices() {
         System.out.println("=== Best Practices ===");
 
         System.out.println("""
-        DO:
-        - Use AtomicInteger for counters, sequence numbers
-        - Use updateAndGet/accumulateAndGet for custom operations
-        - Prefer atomic classes for single-variable thread safety
+                DO:
+                - Use AtomicInteger for counters, sequence numbers
+                - Use updateAndGet/accumulateAndGet for custom operations
+                - Prefer atomic classes for single-variable thread safety
 
-        DON'T:
-        - Use for compound operations (check-then-act)
-        - Assume multiple atomic ops are atomic together:
+                DON'T:
+                - Use for compound operations (check-then-act)
+                - Assume multiple atomic ops are atomic together:
 
-          // BROKEN - not atomic as a whole!
-          if (counter.get() == 0) {
-              counter.set(1);
-          }
+                  // BROKEN - not atomic as a whole!
+                  if (counter.get() == 0) {
+                      counter.set(1);
+                  }
 
-          // CORRECT - single atomic operation
-          counter.compareAndSet(0, 1);
+                  // CORRECT - single atomic operation
+                  counter.compareAndSet(0, 1);
 
-        Related classes:
-        - AtomicLong, AtomicBoolean - other primitives
-        - AtomicReference<T> - for objects
-        - AtomicIntegerArray - atomic array operations
-        - LongAdder/LongAccumulator - better for high contention
+                Related classes:
+                - AtomicLong, AtomicBoolean - other primitives
+                - AtomicReference<T> - for objects
+                - AtomicIntegerArray - atomic array operations
+                - LongAdder/LongAccumulator - better for high contention
 
-        Performance tip:
-        For very high contention counters, LongAdder is faster
-        than AtomicLong because it reduces contention by spreading
-        updates across multiple cells.
-        """);
+                Performance tip:
+                For very high contention counters, LongAdder is faster
+                than AtomicLong because it reduces contention by spreading
+                updates across multiple cells.
+                """);
     }
 }

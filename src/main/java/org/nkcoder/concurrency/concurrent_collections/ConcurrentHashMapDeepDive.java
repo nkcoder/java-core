@@ -1,4 +1,4 @@
-package org.nkcoder.collections;
+package org.nkcoder.concurrency.concurrent_collections;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
