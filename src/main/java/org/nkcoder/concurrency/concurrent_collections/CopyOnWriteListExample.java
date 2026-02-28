@@ -123,6 +123,7 @@ public class CopyOnWriteListExample {
             System.out.println("    Processing: " + name);
             if (name.equals("Bob")) {
                 names.add("Diana"); // Safe! Won't affect this iteration
+                names.remove("Alice");
             }
         }
         System.out.println("  Final list: " + names);

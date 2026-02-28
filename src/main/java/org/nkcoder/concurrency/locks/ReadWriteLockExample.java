@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.StampedLock;
+import java.util.function.Function;
 
 /**
  * ReadWriteLock: Allows multiple readers OR single writer.
@@ -131,7 +132,7 @@ public class ReadWriteLockExample {
                 }
             }
 
-            V computeIfAbsent(K key, java.util.function.Function<K, V> mappingFunction) {
+            V computeIfAbsent(K key, Function<K, V> mappingFunction) {
                 // First try read lock
                 lock.readLock().lock();
                 try {

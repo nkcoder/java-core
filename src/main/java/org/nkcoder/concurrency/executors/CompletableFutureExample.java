@@ -4,20 +4,23 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * CompletableFuture: Composable asynchronous programming in Java.
  *
- * <p>Key concepts:
+ * <p>
+ * Key concepts:
  *
  * <ul>
- *   <li>Non-blocking async operations with callbacks
- *   <li>Chainable transformations (like Stream for async)
- *   <li>Combine multiple futures
- *   <li>Flexible exception handling
+ * <li>Non-blocking async operations with callbacks
+ * <li>Chainable transformations (like Stream for async)
+ * <li>Combine multiple futures
+ * <li>Flexible exception handling
  * </ul>
  *
- * <p>Interview tip: Know the difference between thenApply vs thenCompose, and handle vs exceptionally.
+ * <p>
+ * Interview tip: Know the difference between thenApply vs thenCompose, and handle vs exceptionally.
  */
 public class CompletableFutureExample {
 
@@ -43,7 +46,7 @@ public class CompletableFutureExample {
 
         // 2. runAsync - async task without return value
         CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
-            sleep(50);
+            sleep(10);
             System.out.println("  runAsync completed");
         });
 
@@ -57,7 +60,8 @@ public class CompletableFutureExample {
 
         // 5. With custom executor
         try (ExecutorService customExecutor = Executors.newFixedThreadPool(2)) {
-            CompletableFuture<String> future5 = CompletableFuture.supplyAsync(() -> "Custom executor", customExecutor);
+            CompletableFuture<String> future5 =
+                    CompletableFuture.supplyAsync(() -> "Custom executor", customExecutor);
             System.out.println("  Custom executor: " + future5.get());
         }
 
@@ -74,21 +78,21 @@ public class CompletableFutureExample {
         System.out.println("=== Chaining Operations ===");
 
         // thenApply - transform result (like map)
-        CompletableFuture<Integer> lengthFuture = CompletableFuture.supplyAsync(() -> "Hello")
-                .thenApply(s -> s + " World") // String -> String
-                .thenApply(String::length); // String -> Integer
+        CompletableFuture<Integer> lengthFuture =
+                CompletableFuture.supplyAsync(() -> "Hello").thenApply(s -> s + " World") // String
+                                                                                          // ->
+                                                                                          // String
+                        .thenApply(String::length); // String -> Integer
 
         System.out.println("  thenApply chain: " + lengthFuture.get());
 
         // thenAccept - consume result (no return)
         CompletableFuture.supplyAsync(() -> "Consumed")
-                .thenAccept(s -> System.out.println("  thenAccept: " + s))
-                .get();
+                .thenAccept(s -> System.out.println("  thenAccept: " + s)).get();
 
         // thenRun - run action after completion (ignores result)
         CompletableFuture.supplyAsync(() -> "Ignored")
-                .thenRun(() -> System.out.println("  thenRun: Runs after, ignores result"))
-                .get();
+                .thenRun(() -> System.out.println("  thenRun: Runs after, ignores result")).get();
 
         System.out.println();
     }
@@ -97,7 +101,7 @@ public class CompletableFutureExample {
         System.out.println("=== thenApply vs thenCompose ===");
 
         // Simulating async service calls
-        java.util.function.Function<String, CompletableFuture<String>> asyncService =
+        Function<String, CompletableFuture<String>> asyncService =
                 input -> CompletableFuture.supplyAsync(() -> {
                     sleep(50);
                     return "Processed: " + input;
@@ -105,25 +109,27 @@ public class CompletableFutureExample {
 
         // thenApply with async function -> nested CompletableFuture (bad)
         CompletableFuture<CompletableFuture<String>> nested =
-                CompletableFuture.supplyAsync(() -> "data").thenApply(asyncService); // Returns CF<CF<String>>!
+                CompletableFuture.supplyAsync(() -> "data").thenApply(asyncService); // Returns
+                                                                                     // CF<CF<String>>!
 
         // thenCompose flattens (like flatMap)
         CompletableFuture<String> flat =
-                CompletableFuture.supplyAsync(() -> "data").thenCompose(asyncService); // Returns CF<String>
+                CompletableFuture.supplyAsync(() -> "data").thenCompose(asyncService); // Returns
+                                                                                       // CF<String>
 
         System.out.println("  thenApply (nested): " + nested.get().get());
         System.out.println("  thenCompose (flat): " + flat.get());
 
         System.out.println("""
 
-        Rule of thumb:
-        - thenApply: sync function (T -> U)
-        - thenCompose: async function (T -> CompletableFuture<U>)
+                Rule of thumb:
+                - thenApply: sync function (T -> U)
+                - thenCompose: async function (T -> CompletableFuture<U>)
 
-        Like Stream:
-        - thenApply ~ map
-        - thenCompose ~ flatMap
-        """);
+                Like Stream:
+                - thenApply ~ map
+                - thenCompose ~ flatMap
+                """);
     }
 
     static void combiningFutures() throws Exception {
@@ -140,7 +146,8 @@ public class CompletableFutureExample {
         });
 
         // thenCombine - combine two futures when both complete
-        CompletableFuture<String> combined = future1.thenCombine(future2, (s1, s2) -> s1 + " " + s2);
+        CompletableFuture<String> combined =
+                future1.thenCombine(future2, (s1, s2) -> s1 + " " + s2);
         System.out.println("  thenCombine: " + combined.get());
 
         // allOf - wait for ALL futures (returns Void)
@@ -184,28 +191,29 @@ public class CompletableFutureExample {
 
         // exceptionally - recover from exception
         CompletableFuture<String> recovered = CompletableFuture.supplyAsync(() -> {
-                    if (true) throw new RuntimeException("Oops!");
-                    return "OK";
-                })
-                .exceptionally(ex -> "Recovered from: " + ex.getMessage());
+            if (true)
+                throw new RuntimeException("Oops!");
+            return "OK";
+        }).exceptionally(ex -> "Recovered from: " + ex.getMessage());
 
         System.out.println("  exceptionally: " + recovered.get());
 
         // handle - process result OR exception
         CompletableFuture<String> handled = CompletableFuture.supplyAsync(() -> {
-                    if (Math.random() > 0.5) throw new RuntimeException("Random fail");
-                    return "Success";
-                })
-                .handle((result, ex) -> {
-                    if (ex != null) return "Handled error: " + ex.getMessage();
-                    return "Result: " + result;
-                });
+            if (Math.random() > 0.5)
+                throw new RuntimeException("Random fail");
+            return "Success";
+        }).handle((result, ex) -> {
+            if (ex != null)
+                return "Handled error: " + ex.getMessage();
+            return "Result: " + result;
+        });
 
         System.out.println("  handle: " + handled.get());
 
         // whenComplete - side effect, doesn't transform
-        CompletableFuture<String> logged = CompletableFuture.supplyAsync(() -> "Data")
-                .whenComplete((result, ex) -> {
+        CompletableFuture<String> logged =
+                CompletableFuture.supplyAsync(() -> "Data").whenComplete((result, ex) -> {
                     if (ex != null) {
                         System.out.println("  whenComplete: Error - " + ex.getMessage());
                     } else {
@@ -216,15 +224,15 @@ public class CompletableFutureExample {
 
         System.out.println("""
 
-        Exception handling methods:
-        +----------------+-------------+------------------+
-        | Method         | Can recover | Transforms value |
-        +----------------+-------------+------------------+
-        | exceptionally  | Yes         | Only on error    |
-        | handle         | Yes         | Always           |
-        | whenComplete   | No          | No (side effect) |
-        +----------------+-------------+------------------+
-        """);
+                Exception handling methods:
+                +----------------+-------------+------------------+
+                | Method         | Can recover | Transforms value |
+                +----------------+-------------+------------------+
+                | exceptionally  | Yes         | Only on error    |
+                | handle         | Yes         | Always           |
+                | whenComplete   | No          | No (side effect) |
+                +----------------+-------------+------------------+
+                """);
     }
 
     static void asyncVsSync() throws Exception {
@@ -236,39 +244,38 @@ public class CompletableFutureExample {
         // - thenApplyAsync(fn, executor): runs in custom executor
 
         CompletableFuture.supplyAsync(() -> {
-                    System.out.println("  Supply: " + Thread.currentThread().getName());
-                    return "data";
-                })
-                .thenApply(s -> {
-                    System.out.println("  thenApply: " + Thread.currentThread().getName());
-                    return s.toUpperCase();
-                })
-                .thenApplyAsync(s -> {
-                    System.out.println(
-                            "  thenApplyAsync: " + Thread.currentThread().getName());
-                    return s + "!";
-                })
-                .get();
+            System.out.println("  Supply: " + Thread.currentThread().getName());
+            return "data";
+        }).thenApply(s -> {
+            System.out.println("  thenApply: " + Thread.currentThread().getName());
+            return s.toUpperCase();
+        }).thenApplyAsync(s -> {
+            System.out.println("  thenApplyAsync: " + Thread.currentThread().getName());
+            return s + "!";
+        }).get();
 
         System.out.println("""
 
-        Thread behavior:
-        - thenApply: May run in completing thread OR calling thread
-        - thenApplyAsync: Always runs in ForkJoinPool (or custom executor)
+                Thread behavior:
+                - thenApply: May run in completing thread OR calling thread
+                - thenApplyAsync: Always runs in ForkJoinPool (or custom executor)
 
-        Use Async variants when:
-        - Operation is slow/blocking
-        - Need specific executor
-        - Want guaranteed async execution
-        """);
+                Use Async variants when:
+                - Operation is slow/blocking
+                - Need specific executor
+                - Want guaranteed async execution
+                """);
     }
 
     static void realWorldExample() throws Exception {
         System.out.println("=== Real-World Example: API Aggregation ===");
 
-        record User(String name, String email) {}
-        record Order(int count, double total) {}
-        record Dashboard(User user, Order order, String recommendation) {}
+        record User(String name, String email) {
+        }
+        record Order(int count, double total) {
+        }
+        record Dashboard(User user, Order order, String recommendation) {
+        }
 
         // Simulate async service calls
         CompletableFuture<User> userFuture = CompletableFuture.supplyAsync(() -> {
@@ -289,9 +296,10 @@ public class CompletableFutureExample {
         // Combine all results
         long start = System.currentTimeMillis();
 
-        CompletableFuture<Dashboard> dashboardFuture = userFuture
-                .thenCombine(orderFuture, (user, order) -> new Object[] {user, order})
-                .thenCombine(recsFuture, (arr, rec) -> new Dashboard((User) arr[0], (Order) arr[1], rec));
+        CompletableFuture<Dashboard> dashboardFuture =
+                userFuture.thenCombine(orderFuture, (user, order) -> new Object[] {user, order})
+                        .thenCombine(recsFuture,
+                                (arr, rec) -> new Dashboard((User) arr[0], (Order) arr[1], rec));
 
         Dashboard dashboard = dashboardFuture.get();
         long elapsed = System.currentTimeMillis() - start;
@@ -308,33 +316,33 @@ public class CompletableFutureExample {
         System.out.println("=== Best Practices ===");
 
         System.out.println("""
-        DO:
-        - Use supplyAsync/runAsync to start async chains
-        - Use thenCompose for async-returning functions (avoid nesting)
-        - Handle exceptions with handle() or exceptionally()
-        - Use custom executor for blocking operations
-        - Use allOf/anyOf for multiple independent futures
+                DO:
+                - Use supplyAsync/runAsync to start async chains
+                - Use thenCompose for async-returning functions (avoid nesting)
+                - Handle exceptions with handle() or exceptionally()
+                - Use custom executor for blocking operations
+                - Use allOf/anyOf for multiple independent futures
 
-        DON'T:
-        - Call get() too early (blocks, defeats async purpose)
-        - Ignore exceptions (use handle/exceptionally)
-        - Use common pool for blocking I/O (can starve other tasks)
-        - Create deeply nested callbacks (hard to read)
+                DON'T:
+                - Call get() too early (blocks, defeats async purpose)
+                - Ignore exceptions (use handle/exceptionally)
+                - Use common pool for blocking I/O (can starve other tasks)
+                - Create deeply nested callbacks (hard to read)
 
-        Timeouts (Java 9+):
-        - orTimeout(duration): Fails with TimeoutException
-        - completeOnTimeout(value, duration): Completes with default
+                Timeouts (Java 9+):
+                - orTimeout(duration): Fails with TimeoutException
+                - completeOnTimeout(value, duration): Completes with default
 
-        Java 21+ alternative:
-        - For simple parallel I/O, virtual threads may be cleaner
-        - CompletableFuture still good for complex async workflows
+                Java 21+ alternative:
+                - For simple parallel I/O, virtual threads may be cleaner
+                - CompletableFuture still good for complex async workflows
 
-        Common patterns:
-        - API aggregation: allOf + individual gets
-        - Fallback: exceptionally or handle
-        - Racing: anyOf for first response
-        - Pipeline: chain of thenApply/thenCompose
-        """);
+                Common patterns:
+                - API aggregation: allOf + individual gets
+                - Fallback: exceptionally or handle
+                - Racing: anyOf for first response
+                - Pipeline: chain of thenApply/thenCompose
+                """);
     }
 
     private static void sleep(long ms) {

@@ -10,13 +10,15 @@ import java.util.stream.IntStream;
  * Virtual Threads (Java 21+): Lightweight threads for high-throughput I/O.
  *
  * <ul>
- *   <li>Millions of virtual threads can run concurrently
- *   <li>Ideal for I/O-bound tasks (HTTP, database, file I/O)
- *   <li>NOT for CPU-bound tasks (use platform threads/ForkJoinPool)
- *   <li>Managed by JVM, not OS - minimal memory footprint
+ * <li>Millions of virtual threads can run concurrently
+ * <li>Ideal for I/O-bound tasks (HTTP, database, file I/O)
+ * <li>NOT for CPU-bound tasks (use platform threads/ForkJoinPool)
+ * <li>Managed by JVM, not OS - minimal memory footprint
  * </ul>
  *
- * <p>Java 25: Virtual threads are production-ready and the recommended approach for concurrent I/O operations.
+ * <p>
+ * Java 25: Virtual threads are production-ready and the recommended approach for concurrent I/O
+ * operations.
  */
 public class VirtualThreadExample {
 
@@ -33,28 +35,28 @@ public class VirtualThreadExample {
         System.out.println("=== What Are Virtual Threads? ===");
 
         System.out.println("""
-        Virtual threads are lightweight threads managed by the JVM:
+                Virtual threads are lightweight threads managed by the JVM:
 
-        Platform Threads (traditional):
-        - 1:1 mapping to OS threads
-        - ~1MB stack size each
-        - Limited to thousands
-        - Expensive context switching
+                Platform Threads (traditional):
+                - 1:1 mapping to OS threads
+                - ~1MB stack size each
+                - Limited to thousands
+                - Expensive context switching
 
-        Virtual Threads (Java 21+):
-        - Many-to-few mapping to OS threads (carrier threads)
-        - ~1KB initial stack, grows as needed
-        - Can have millions running
-        - Cheap to create and block
+                Virtual Threads (Java 21+):
+                - Many-to-few mapping to OS threads (carrier threads)
+                - ~1KB initial stack, grows as needed
+                - Can have millions running
+                - Cheap to create and block
 
-        Use Virtual Threads for:
-        - HTTP requests, database queries, file I/O
-        - Any blocking operation that waits for external resources
+                Use Virtual Threads for:
+                - HTTP requests, database queries, file I/O
+                - Any blocking operation that waits for external resources
 
-        DON'T use Virtual Threads for:
-        - CPU-intensive calculations (use platform threads)
-        - Tasks holding locks for long periods
-        """);
+                DON'T use Virtual Threads for:
+                - CPU-intensive calculations (use platform threads)
+                - Tasks holding locks for long periods
+                """);
     }
 
     static void creatingVirtualThreads() throws Exception {
@@ -74,8 +76,7 @@ public class VirtualThreadExample {
 
         // Method 3: Unstarted thread (start manually)
         Thread vt3 = Thread.ofVirtual().name("manual-start").unstarted(() -> {
-            System.out.println(
-                    "  [3] Manually started: " + Thread.currentThread().getName());
+            System.out.println("  [3] Manually started: " + Thread.currentThread().getName());
         });
         vt3.start();
         vt3.join();
@@ -119,12 +120,12 @@ public class VirtualThreadExample {
 
         System.out.println("""
 
-        Why use newVirtualThreadPerTaskExecutor()?
-        - Creates a new virtual thread for each task
-        - No thread pool sizing needed (auto-scales)
-        - Implements AutoCloseable for easy cleanup
-        - The standard pattern for virtual thread usage
-        """);
+                Why use newVirtualThreadPerTaskExecutor()?
+                - Creates a new virtual thread for each task
+                - No thread pool sizing needed (auto-scales)
+                - Implements AutoCloseable for easy cleanup
+                - The standard pattern for virtual thread usage
+                """);
     }
 
     static void scalabilityDemo() throws Exception {
@@ -148,14 +149,21 @@ public class VirtualThreadExample {
          * </pre>
          */
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            IntStream.range(0, taskCount).forEach(i -> executor.submit(() -> simulateIO("Task #" + i, 100)));
+            IntStream.range(0, taskCount).forEach(i -> executor.submit(() -> {
+                try {
+                    Thread.sleep(i);
+                } catch (Exception e) {
+
+                }
+            }));
+
+            Duration duration = Duration.between(start, Instant.now());
+            System.out.println(
+                    "  Completed " + taskCount + " tasks in " + duration.toMillis() + "ms");
+            System.out.println("  (With platform threads, this would need 10,000 OS threads!)");
+
+            System.out.println();
         }
-
-        Duration duration = Duration.between(start, Instant.now());
-        System.out.println("  Completed " + taskCount + " tasks in " + duration.toMillis() + "ms");
-        System.out.println("  (With platform threads, this would need 10,000 OS threads!)");
-
-        System.out.println();
     }
 
     static void virtualVsPlatformThreads() throws Exception {
@@ -168,62 +176,64 @@ public class VirtualThreadExample {
         System.out.println("  Platform threads (pool of 100):");
         Instant start1 = Instant.now();
         try (ExecutorService executor = Executors.newFixedThreadPool(100)) {
-            IntStream.range(0, taskCount).forEach(i -> executor.submit(() -> simulateIO("Task #" + i, ioDelayMs)));
+            IntStream.range(0, taskCount)
+                    .forEach(i -> executor.submit(() -> simulateIO("Task #" + i, ioDelayMs)));
         }
-        System.out.println(
-                "    Time: " + Duration.between(start1, Instant.now()).toMillis() + "ms");
+        System.out
+                .println("    Time: " + Duration.between(start1, Instant.now()).toMillis() + "ms");
 
         // Virtual threads (unlimited)
         System.out.println("  Virtual threads (unlimited):");
         Instant start2 = Instant.now();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            IntStream.range(0, taskCount).forEach(i -> executor.submit(() -> simulateIO("Task #" + i, ioDelayMs)));
+            IntStream.range(0, taskCount)
+                    .forEach(i -> executor.submit(() -> simulateIO("Task #" + i, ioDelayMs)));
         }
-        System.out.println(
-                "    Time: " + Duration.between(start2, Instant.now()).toMillis() + "ms");
+        System.out
+                .println("    Time: " + Duration.between(start2, Instant.now()).toMillis() + "ms");
 
         System.out.println("""
 
-        Virtual threads excel when:
-        - Many concurrent tasks
-        - Tasks spend time waiting (I/O)
-        - Platform threads would be idle
+                Virtual threads excel when:
+                - Many concurrent tasks
+                - Tasks spend time waiting (I/O)
+                - Platform threads would be idle
 
-        Platform threads are better when:
-        - CPU-bound computation
-        - Need thread affinity
-        - Using native code with thread-local state
-        """);
+                Platform threads are better when:
+                - CPU-bound computation
+                - Need thread affinity
+                - Using native code with thread-local state
+                """);
     }
 
     static void bestPractices() {
         System.out.println("=== Best Practices for Virtual Threads ===");
 
         System.out.println("""
-        DO:
-        - Use for I/O-bound tasks (HTTP, DB, files)
-        - Use newVirtualThreadPerTaskExecutor()
-        - Write blocking code naturally (no async callbacks)
-        - Let virtual threads block - it's cheap!
+                DO:
+                - Use for I/O-bound tasks (HTTP, DB, files)
+                - Use newVirtualThreadPerTaskExecutor()
+                - Write blocking code naturally (no async callbacks)
+                - Let virtual threads block - it's cheap!
 
-        DON'T:
-        - Use for CPU-intensive work (defeats the purpose)
-        - Pool virtual threads (they're cheap, create new ones)
-        - Use ThreadLocal carelessly (prefer ScopedValue)
-        - Hold locks while doing I/O (pins carrier thread)
+                DON'T:
+                - Use for CPU-intensive work (defeats the purpose)
+                - Pool virtual threads (they're cheap, create new ones)
+                - Use ThreadLocal carelessly (prefer ScopedValue)
+                - Hold locks while doing I/O (pins carrier thread)
 
-        Migration from platform threads:
-        1. Replace Executors.newFixedThreadPool(n) with
-           Executors.newVirtualThreadPerTaskExecutor()
-        2. Replace ThreadLocal with ScopedValue where possible
-        3. Review synchronized blocks (avoid blocking I/O inside)
-        4. Test thoroughly - behavior is mostly the same
+                Migration from platform threads:
+                1. Replace Executors.newFixedThreadPool(n) with
+                   Executors.newVirtualThreadPerTaskExecutor()
+                2. Replace ThreadLocal with ScopedValue where possible
+                3. Review synchronized blocks (avoid blocking I/O inside)
+                4. Test thoroughly - behavior is mostly the same
 
-        Performance tips:
-        - Virtual threads make blocking cheap, not free
-        - Each blocked virtual thread still uses memory
-        - Monitor with: -Djdk.virtualThreadScheduler.parallelism=N
-        """);
+                Performance tips:
+                - Virtual threads make blocking cheap, not free
+                - Each blocked virtual thread still uses memory
+                - Monitor with: -Djdk.virtualThreadScheduler.parallelism=N
+                """);
     }
 
     private static void simulateIO(String task, int delayMs) {
